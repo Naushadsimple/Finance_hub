@@ -1,0 +1,179 @@
+import { useEffect, useState } from 'react'
+import { supabase } from '../lib/supabaseClient'
+import { formatCurrency } from '../utils/formatCurrency'
+import { Users, Wallet, TrendingUp, Mail, ArrowUpRight, Clock } from 'lucide-react'
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts'
+
+export default function AdminDashboard() {
+  const [stats, setStats] = useState({ clients: 0, totalAum: 0, activeInvestments: 0, pendingLeads: 0 })
+  const [recentLeads, setRecentLeads] = useState([])
+  const [auditLogs, setAuditLogs] = useState([])
+  const [chartData, setChartData] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchDashboardData()
+  }, [])
+
+  const fetchDashboardData = async () => {
+    try {
+      const [profilesRes, investmentsRes, leadsRes, logsRes] = await Promise.all([
+        supabase.from('profiles').select('id', { count: 'exact' }).neq('role', 'admin'),
+        supabase.from('investments').select('*'),
+        supabase.from('leads').select('*').order('submitted_at', { ascending: false }).limit(5),
+        supabase.from('audit_logs').select('*').order('created_at', { ascending: false }).limit(10),
+      ])
+
+      const investments = investmentsRes.data || []
+      const totalAum = investments.filter(inv => inv.status === 'active').reduce((sum, inv) => sum + parseFloat(inv.principal || 0), 0)
+      const active = investments.filter(inv => inv.status === 'active')
+
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      const recentInvCount = investments.filter(inv => new Date(inv.created_at) >= thirtyDaysAgo).length;
+
+      setStats({
+        clients: profilesRes.count || 0,
+        totalAum,
+        activeInvestments: active.length,
+        recentInvestments: recentInvCount,
+        totalInvestments: investments.length,
+      })
+
+      setRecentLeads(leadsRes.data || [])
+      setAuditLogs(logsRes.data || [])
+
+      // Generate chart data (mock monthly data based on investments)
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+      setChartData(months.map((month, i) => ({
+        month,
+        aum: Math.round(totalAum * (0.5 + i * 0.1)),
+        returns: Math.round(totalAum * 0.01 * (i + 1)),
+      })))
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <div className="skeleton" style={{ height: '32px', width: '256px' }} />
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+          {[1, 2, 3, 4].map(i => <div key={i} className="skeleton" style={{ height: '128px' }} />)}
+        </div>
+        <div className="skeleton" style={{ height: '384px' }} />
+      </div>
+    )
+  }
+
+  const kpis = [
+    { icon: Users, label: 'Total Users', value: stats.clients, gradient: 'linear-gradient(135deg, #3B82F6, #2563EB)' },
+    { icon: TrendingUp, label: '30-Day Investments', value: stats.recentInvestments, gradient: 'linear-gradient(135deg, #10B981, #059669)' },
+    { icon: Wallet, label: 'All Investments', value: stats.totalInvestments, gradient: 'linear-gradient(135deg, #8B5CF6, #7C3AED)' },
+    { icon: Wallet, label: 'Total AUM', value: formatCurrency(stats.totalAum), gradient: 'linear-gradient(135deg, #F97316, #EA580C)' },
+  ]
+
+  return (
+    <div>
+      <div style={{ marginBottom: '24px' }}>
+        <h1 style={{ fontSize: '24px', fontWeight: 800, color: '#1E293B' }}>Dashboard</h1>
+        <p style={{ color: '#64748B' }}>Overview of your finance operations</p>
+      </div>
+
+      {/* KPI Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', marginBottom: '32px' }}>
+        {kpis.map((kpi, i) => (
+          <div key={i} style={{ background: '#FFFFFF', borderRadius: '16px', padding: '20px', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+              <div style={{ width: '40px', height: '40px', background: kpi.gradient, borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <kpi.icon style={{ width: '20px', height: '20px', color: '#FFFFFF' }} />
+              </div>
+              <ArrowUpRight style={{ width: '16px', height: '16px', color: '#94A3B8' }} />
+            </div>
+            <p style={{ fontSize: '14px', color: '#64748B', marginBottom: '4px' }}>{kpi.label}</p>
+            <p style={{ fontSize: '24px', fontWeight: 800, color: '#1E293B' }}>{kpi.value}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Charts */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px', marginBottom: '32px' }}>
+        <div style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px', border: '1px solid #E2E8F0' }}>
+          <h3 style={{ fontWeight: 700, marginBottom: '16px' }}>AUM Growth</h3>
+          <ResponsiveContainer width="100%" height={250}>
+            <AreaChart data={chartData}>
+              <defs><linearGradient id="aumGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#0EA5E9" stopOpacity={0.3} /><stop offset="95%" stopColor="#0EA5E9" stopOpacity={0} /></linearGradient></defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
+              <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#64748B' }} />
+              <YAxis tick={{ fontSize: 12, fill: '#64748B' }} tickFormatter={(v) => `₹${(v / 100000).toFixed(0)}L`} />
+              <Tooltip formatter={(v) => formatCurrency(v)} />
+              <Area type="monotone" dataKey="aum" stroke="#0EA5E9" fill="url(#aumGrad)" strokeWidth={2} />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+        <div style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px', border: '1px solid #E2E8F0' }}>
+          <h3 style={{ fontWeight: 700, marginBottom: '16px' }}>Monthly Returns</h3>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
+              <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#64748B' }} />
+              <YAxis tick={{ fontSize: 12, fill: '#64748B' }} tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}K`} />
+              <Tooltip formatter={(v) => formatCurrency(v)} />
+              <Bar dataKey="returns" fill="#22C55E" radius={[6, 6, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      {/* Recent Leads + Audit */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
+        <div style={{ background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0' }}>
+          <div style={{ padding: '20px', borderBottom: '1px solid #E2E8F0' }}>
+            <h3 style={{ fontWeight: 700 }}>Recent Leads</h3>
+          </div>
+          {recentLeads.length === 0 ? (
+            <div style={{ padding: '48px', textAlign: 'center', color: '#64748B' }}>No leads yet</div>
+          ) : (
+            recentLeads.map((lead) => (
+              <div key={lead.id} style={{ padding: '12px 20px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div>
+                  <p style={{ fontWeight: 600, fontSize: '14px' }}>{lead.full_name}</p>
+                  <p style={{ fontSize: '12px', color: '#64748B' }}>{lead.email}</p>
+                </div>
+                <span style={{
+                  padding: '4px 10px', borderRadius: '999px', fontSize: '12px', fontWeight: 600,
+                  ...(lead.status === 'new' ? { background: '#DBEAFE', color: '#2563EB' } :
+                    lead.status === 'contacted' ? { background: '#FEF3C7', color: '#D97706' } :
+                    lead.status === 'converted' ? { background: '#DCFCE7', color: '#16A34A' } :
+                    { background: '#FEE2E2', color: '#EF4444' })
+                }}>
+                  {lead.status}
+                </span>
+              </div>
+            ))
+          )}
+        </div>
+
+        <div style={{ background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0' }}>
+          <div style={{ padding: '20px', borderBottom: '1px solid #E2E8F0' }}>
+            <h3 style={{ fontWeight: 700 }}>Activity Log</h3>
+          </div>
+          {auditLogs.length === 0 ? (
+            <div style={{ padding: '48px', textAlign: 'center', color: '#64748B' }}>No activity yet</div>
+          ) : (
+            auditLogs.map((log) => (
+              <div key={log.id} style={{ padding: '12px 20px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <Clock style={{ width: '16px', height: '16px', color: '#94A3B8', flexShrink: 0 }} />
+                <div style={{ flex: 1 }}>
+                  <p style={{ fontSize: '14px' }}>{log.action}</p>
+                  <p style={{ fontSize: '12px', color: '#94A3B8' }}>{new Date(log.created_at).toLocaleString('en-IN')}</p>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
