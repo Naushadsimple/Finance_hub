@@ -11,7 +11,7 @@ export default function Clients() {
   const [showModal, setShowModal] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null)
   const [selectedClient, setSelectedClient] = useState(null)
-  const [formData, setFormData] = useState({ full_name: '', email: '', phone: '', address: '' })
+  const [formData, setFormData] = useState({ full_name: '', email: '', phone: '', address: '', password: '', confirm_password: '' })
 
   const filteredClients = clients.filter(c => {
     const search = searchTerm.toLowerCase();
@@ -24,20 +24,27 @@ export default function Clients() {
 
   const openCreate = () => {
     setSelectedClient(null)
-    setFormData({ full_name: '', email: '', phone: '', address: '' })
+    setFormData({ full_name: '', email: '', phone: '', address: '', password: '', confirm_password: '' })
     setShowModal(true)
   }
 
   const openEdit = (client) => {
     setSelectedClient(client)
-    setFormData({ full_name: client.full_name, email: client.email, phone: client.phone || '', address: client.address || '' })
+    setFormData({ full_name: client.full_name, email: client.email, phone: client.phone || '', address: client.address || '', password: '', confirm_password: '' })
     setShowModal(true)
   }
 
   const handleSave = async () => {
     try {
+      if (!selectedClient) {
+        if (!formData.password) throw new Error('Password is required')
+        if (formData.password !== formData.confirm_password) throw new Error('Passwords do not match')
+        if (formData.password.length < 6) throw new Error('Password must be at least 6 characters')
+      }
+
       if (selectedClient) {
-        await updateClient(selectedClient.id, formData)
+        const { password, confirm_password, ...updateData } = formData
+        await updateClient(selectedClient.id, updateData)
         addToast('Client updated successfully', 'success')
       } else {
         await createClient(formData)
@@ -155,7 +162,7 @@ export default function Clients() {
       {/* Edit/Create Modal */}
       {showModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 60, padding: '24px' }}>
-          <div style={{ background: '#FFFFFF', borderRadius: '20px', width: '100%', maxWidth: '480px', padding: '32px' }}>
+          <div style={{ background: '#FFFFFF', borderRadius: '20px', width: '100%', maxWidth: '480px', padding: '32px', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
               <h2 style={{ fontSize: '20px', fontWeight: 800 }}>{selectedClient ? 'Edit Client' : 'Add Client'}</h2>
               <button onClick={() => setShowModal(false)} style={{ padding: '4px', color: '#64748B', background: 'none', border: 'none', cursor: 'pointer' }}><X style={{ width: '20px', height: '20px' }} /></button>
@@ -164,8 +171,16 @@ export default function Clients() {
               <div><label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Full Name</label><input value={formData.full_name} onChange={(e) => setFormData({ ...formData, full_name: e.target.value })} style={inputStyle} /></div>
               <div><label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Email</label><input value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} type="email" style={inputStyle} disabled={!!selectedClient} /></div>
               <div><label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Phone</label><input value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} style={inputStyle} /></div>
-              <div><label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Address</label><textarea value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} rows={3} style={{ ...inputStyle, resize: 'none' }} /></div>
-              <button onClick={handleSave} style={{ width: '100%', padding: '14px', background: '#0F172A', color: '#FFFFFF', borderRadius: '12px', fontWeight: 700, border: 'none', cursor: 'pointer' }}>
+              <div><label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Address (Optional)</label><textarea value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} rows={2} style={{ ...inputStyle, resize: 'none' }} /></div>
+              
+              {!selectedClient && (
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div><label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Password</label><input value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} type="password" style={inputStyle} /></div>
+                  <div><label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Confirm Password</label><input value={formData.confirm_password} onChange={(e) => setFormData({ ...formData, confirm_password: e.target.value })} type="password" style={inputStyle} /></div>
+                </div>
+              )}
+
+              <button onClick={handleSave} style={{ width: '100%', padding: '14px', background: '#0F172A', color: '#FFFFFF', borderRadius: '12px', fontWeight: 700, border: 'none', cursor: 'pointer', marginTop: '8px' }}>
                 {selectedClient ? 'Update Client' : 'Create Client'}
               </button>
             </div>

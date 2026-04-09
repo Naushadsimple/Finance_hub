@@ -29,14 +29,15 @@ export function useClients() {
   }, [])
 
   const createClient = async (clientData) => {
-    // Generate a client code if not provided
-    const clientCode = `FH-${Math.floor(1000 + Math.random() * 9000)}`
-    const { error: err } = await supabase
-      .from('profiles')
-      .insert([{ ...clientData, role: 'client', client_code: clientCode }])
+    const { data, error: err } = await supabase.functions.invoke('admin-create-user', {
+      body: clientData
+    })
     
-    if (!err) fetchClients()
-    return err
+    if (err) throw err
+    if (data?.error) throw new Error(data.error)
+
+    fetchClients()
+    return null
   }
 
   const updateClient = async (id, clientData) => {
