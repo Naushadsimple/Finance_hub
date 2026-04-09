@@ -39,6 +39,23 @@ export default function SignUp() {
     setError('')
     try {
       await signUp(formData.email, formData.password, formData.full_name, formData.phone)
+      
+      // Post-signup Welcome Email via Edge Function
+      try {
+        await supabase.functions.invoke('send-email', {
+          body: {
+            type: 'verification',
+            to: formData.email,
+            data: {
+              name: formData.full_name,
+              url: `${window.location.origin}/sign-in` // Simple redirection info
+            }
+          }
+        })
+      } catch (e) {
+        console.error('Welcome email failed', e)
+      }
+
       addToast('Registration successful! Please check your email to verify your account.', 'success')
       navigate('/sign-in')
     } catch (err) {

@@ -45,6 +45,39 @@ export default function LeadForm() {
         proposed_amount: Number(formData.proposed_amount),
       })
       if (err) throw err
+
+      // Send Emails via Edge Function
+      try {
+        // To User
+        await supabase.functions.invoke('send-email', {
+          body: {
+            type: 'new_lead_user',
+            to: formData.email,
+            data: {
+              full_name: formData.full_name,
+              proposed_amount: Number(formData.proposed_amount),
+              phone: formData.phone
+            }
+          }
+        })
+
+        // To Admin
+        await supabase.functions.invoke('send-email', {
+          body: {
+            type: 'new_lead_admin',
+            to: 'support@financehubonline.com',
+            data: {
+              full_name: formData.full_name,
+              email: formData.email,
+              phone: formData.phone,
+              proposed_amount: Number(formData.proposed_amount)
+            }
+          }
+        })
+      } catch (emailErr) {
+        console.error('Email notification failed:', emailErr)
+      }
+
       setSuccess(true)
     } catch (err) {
       setError(err.message || 'Something went wrong')
