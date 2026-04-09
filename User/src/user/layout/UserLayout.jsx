@@ -1,12 +1,25 @@
 import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import UserSidebar from './UserSidebar'
-import { Menu } from 'lucide-react'
+import { Menu, LogOut } from 'lucide-react'
 import { useAuthStore } from '../../store/authStore'
+import { useToastStore } from '../../store/toastStore'
 
 export default function UserLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { profile } = useAuthStore()
+  const { profile, signOut } = useAuthStore()
+  const navigate = useNavigate()
+  const addToast = useToastStore((s) => s.addToast)
+
+  const handleSignOut = async () => {
+    try {
+      await signOut()
+      addToast('Logged out successfully', 'info')
+      navigate('/')
+    } catch (error) {
+      addToast(error.message, 'error')
+    }
+  }
 
   return (
     <div style={{ minHeight: '100vh', background: '#F8FAFC' }}>
@@ -35,25 +48,47 @@ export default function UserLayout() {
             <span style={{ fontSize: '14px', color: '#64748B', fontWeight: 500 }}>Authenticated as</span>
             <span style={{ fontSize: '14px', fontWeight: 800, color: '#0F172A', background: '#F1F5F9', padding: '4px 12px', borderRadius: '8px' }}>{profile?.full_name || 'Member'}</span>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <div style={{ textAlign: 'right', marginRight: '4px' }} className="hidden sm:block">
               <p style={{ fontSize: '13px', fontWeight: 700, color: '#0F172A', lineHeight: 1 }}>{profile?.full_name}</p>
               <p style={{ fontSize: '11px', color: '#10B981', fontWeight: 600, marginTop: '4px' }}>Active Session</p>
             </div>
-            <div style={{ 
-              width: '44px', 
-              height: '44px', 
-              background: 'linear-gradient(135deg, #0EA5E9, #2563EB)', 
-              borderRadius: '14px', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center', 
-              color: '#FFFFFF', 
-              fontSize: '16px', 
-              fontWeight: 800,
-              boxShadow: '0 4px 12px rgba(14, 165, 233, 0.2)'
-            }}>
-              {profile?.full_name?.charAt(0)?.toUpperCase() || 'U'}
+            <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ 
+                width: '44px', 
+                height: '44px', 
+                background: 'linear-gradient(135deg, #0EA5E9, #2563EB)', 
+                borderRadius: '14px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                color: '#FFFFFF', 
+                fontSize: '16px', 
+                fontWeight: 800,
+                boxShadow: '0 4px 12px rgba(14, 165, 233, 0.2)'
+              }}>
+                {profile?.full_name?.charAt(0)?.toUpperCase() || 'U'}
+              </div>
+              <button 
+                onClick={handleSignOut}
+                title="Sign Out"
+                style={{ 
+                  padding: '10px', 
+                  background: '#FEF2F2', 
+                  border: '1px solid #FEE2E2', 
+                  borderRadius: '12px', 
+                  color: '#EF4444', 
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.background = '#FEE2E2'}
+                onMouseOut={(e) => e.currentTarget.style.background = '#FEF2F2'}
+              >
+                <LogOut style={{ width: '18px', height: '18px' }} />
+              </button>
             </div>
           </div>
         </header>
