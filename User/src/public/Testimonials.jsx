@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Star, Quote, ArrowLeft, ArrowRight } from 'lucide-react'
+import { Star, Quote } from 'lucide-react'
 import gsap from 'gsap'
 
 export default function Testimonials() {
@@ -12,24 +12,36 @@ export default function Testimonials() {
   ]
 
   return (
-    <section style={{ padding: '100px 24px', background: '#FFFFFF' }}>
+    <section style={{ padding: '80px 20px', background: '#FFFFFF' }} className="sm:py-24 sm:px-8">
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-          <span style={{ color: '#0EA5E9', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', fontSize: '12px' }}>Voices of Trust</span>
-          <h2 style={{ fontSize: '40px', fontWeight: 900, color: '#0F172A', marginTop: '12px' }}>What Our Investors Say</h2>
+        <div className="text-center" style={{ marginBottom: '48px' }}>
+          <span style={{ color: '#0EA5E9', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', fontSize: '11px' }}>Voices of Trust</span>
+          <h2 style={{ fontWeight: 900, color: '#0F172A', marginTop: '12px', letterSpacing: '-1px' }} className="text-2xl sm:text-4xl">What Our Investors Say</h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {reviews.map((r, i) => (
-            <div key={i} style={{ padding: '40px', background: '#F8FAFC', borderRadius: '32px', border: '1px solid #F1F5F9', position: 'relative', transition: 'transform 0.3s' }}>
-              <Quote style={{ position: 'absolute', top: '32px', right: '32px', width: '40px', height: '40px', color: '#0EA5E915' }} />
-              <div style={{ display: 'flex', gap: '4px', marginBottom: '24px' }}>
-                {[...Array(r.rating)].map((_, i) => <Star key={i} style={{ width: '18px', height: '18px', fill: '#FFB800', color: '#FFB800' }} />)}
+            <div
+              key={i}
+              style={{
+                background: '#F8FAFC',
+                borderRadius: '24px',
+                border: '1px solid #E2E8F0',
+                padding: '32px',
+                position: 'relative',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.04)',
+                transition: 'all 0.3s ease'
+              }}
+              className="sm:p-10 hover:-translate-y-1 hover:shadow-lg"
+            >
+              <Quote style={{ position: 'absolute', top: '28px', right: '28px', width: '36px', height: '36px', color: '#E2E8F0' }} />
+              <div style={{ display: 'flex', gap: '4px', marginBottom: '20px' }}>
+                {[...Array(r.rating)].map((_, i) => <Star key={i} style={{ width: '16px', height: '16px', fill: '#FFB800', color: '#FFB800' }} />)}
               </div>
-              <p style={{ fontSize: '16px', color: '#475569', lineHeight: 1.7, marginBottom: '24px', fontStyle: 'italic' }}>"{r.text}"</p>
-              <div>
-                <p style={{ fontWeight: 800, color: '#0F172A', fontSize: '18px' }}>{r.name}</p>
-                <p style={{ fontSize: '14px', color: '#64748B', fontWeight: 500 }}>{r.role}</p>
+              <p style={{ fontSize: '15px', color: '#475569', lineHeight: 1.75, marginBottom: '24px', fontStyle: 'italic' }}>"{r.text}"</p>
+              <div style={{ borderTop: '1px solid #E2E8F0', paddingTop: '16px' }}>
+                <p style={{ fontWeight: 800, color: '#0F172A', fontSize: '16px' }}>{r.name}</p>
+                <p style={{ fontSize: '13px', color: '#64748B', fontWeight: 500, marginTop: '2px' }}>{r.role}</p>
               </div>
             </div>
           ))}

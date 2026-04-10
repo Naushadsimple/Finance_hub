@@ -44,17 +44,17 @@ export default function Profile() {
         </div>
 
         {/* Details */}
-        <div style={{ padding: '32px' }}>
+        <div style={{ padding: '24px' }} className="sm:p-8">
           {error && <div style={{ background: '#FEF2F2', color: '#EF4444', padding: '12px 16px', borderRadius: '12px', marginBottom: '20px', fontSize: '14px' }}>{error}</div>}
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '20px' }} className="sm:grid-cols-2 sm:gap-6">
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
               <div style={{ width: '40px', height: '40px', background: '#F8FAFC', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 <Mail style={{ width: '20px', height: '20px', color: '#64748B' }} />
               </div>
               <div>
                 <p style={{ fontSize: '12px', color: '#64748B', marginBottom: '4px' }}>Email</p>
-                <p style={{ fontWeight: 600 }}>{profile.email}</p>
+                <p style={{ fontWeight: 600, fontSize: '14px' }} className="sm:text-base">{profile.email}</p>
               </div>
             </div>
 
@@ -67,12 +67,12 @@ export default function Profile() {
                 {editing ? (
                   <input value={phone} onChange={(e) => setPhone(e.target.value)} style={inputStyle} />
                 ) : (
-                  <p style={{ fontWeight: 600 }}>{profile.phone || 'Not set'}</p>
+                  <p style={{ fontWeight: 600, fontSize: '14px' }} className="sm:text-base">{profile.phone || 'Not set'}</p>
                 )}
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', gridColumn: 'span 2' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }} className="sm:col-span-2">
               <div style={{ width: '40px', height: '40px', background: '#F8FAFC', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                 <MapPin style={{ width: '20px', height: '20px', color: '#64748B' }} />
               </div>
@@ -81,7 +81,7 @@ export default function Profile() {
                 {editing ? (
                   <textarea value={address} onChange={(e) => setAddress(e.target.value)} rows={2} style={{ ...inputStyle, resize: 'none' }} />
                 ) : (
-                  <p style={{ fontWeight: 600 }}>{profile.address || 'Not set'}</p>
+                  <p style={{ fontWeight: 600, fontSize: '14px' }} className="sm:text-base">{profile.address || 'Not set'}</p>
                 )}
               </div>
             </div>
@@ -92,7 +92,7 @@ export default function Profile() {
               </div>
               <div>
                 <p style={{ fontSize: '12px', color: '#64748B', marginBottom: '4px' }}>Client Code</p>
-                <p style={{ fontWeight: 600 }}>{profile.client_code || 'Pending'}</p>
+                <p style={{ fontWeight: 600, fontSize: '14px' }} className="sm:text-base">{profile.client_code || 'Pending'}</p>
               </div>
             </div>
 
@@ -102,7 +102,7 @@ export default function Profile() {
               </div>
               <div>
                 <p style={{ fontSize: '12px', color: '#64748B', marginBottom: '4px' }}>Member Since</p>
-                <p style={{ fontWeight: 600 }}>{new Date(profile.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                <p style={{ fontWeight: 600, fontSize: '14px' }} className="sm:text-base">{new Date(profile.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
               </div>
             </div>
           </div>

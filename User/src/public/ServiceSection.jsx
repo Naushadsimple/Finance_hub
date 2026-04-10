@@ -3,51 +3,81 @@ import { TrendingUp, PieChart, ShieldCheck, ArrowUpRight, LayoutGrid, CheckCircl
 import { Link } from 'react-router-dom'
 
 const ICON_MAP = {
-  TrendingUp: <TrendingUp style={{ width: '32px', height: '32px' }} />,
-  PieChart: <PieChart style={{ width: '32px', height: '32px' }} />,
-  ShieldCheck: <ShieldCheck style={{ width: '32px', height: '32px' }} />,
-  ArrowUpRight: <ArrowUpRight style={{ width: '32px', height: '32px' }} />,
-  LayoutGrid: <LayoutGrid style={{ width: '32px', height: '32px' }} />,
-  CheckCircle2: <CheckCircle2 style={{ width: '32px', height: '32px' }} />,
+  TrendingUp: <TrendingUp />,
+  PieChart: <PieChart />,
+  ShieldCheck: <ShieldCheck />,
+  ArrowUpRight: <ArrowUpRight />,
+  LayoutGrid: <LayoutGrid />,
+  CheckCircle2: <CheckCircle2 />,
 }
 
 export default function ServiceSection() {
   const { services, loading } = useServices()
 
   if (loading) return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', padding: '0 24px' }}>
-      {[1,2,3,4].map(i => <div key={i} className="skeleton" style={{ height: '240px', borderRadius: '24px' }} />)}
+    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        {[1, 2, 3].map(i => <div key={i} style={{ height: '280px', borderRadius: '24px', background: '#F1F5F9' }} />)}
+      </div>
     </div>
   )
 
   return (
-    <section style={{ padding: '100px 24px' }}>
+    <section style={{ padding: '80px 20px', background: '#FFFFFF' }} className="sm:py-24 sm:px-8">
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-          <span style={{ color: '#0EA5E9', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', fontSize: '12px' }}>What We Offer</span>
-          <h2 style={{ fontSize: '40px', fontWeight: 900, color: '#0F172A', marginTop: '12px' }}>Financial Solutions for Everyone</h2>
+        <div style={{ textAlign: 'center', marginBottom: '48px' }} className="sm:mb-16">
+          <span style={{ color: '#0EA5E9', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', fontSize: '11px' }}>What We Offer</span>
+          <h2 style={{ fontWeight: 900, color: '#0F172A', marginTop: '12px', letterSpacing: '-1px' }} className="text-2xl sm:text-4xl">Financial Solutions for Everyone</h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {services.slice(0, 3).map((service) => {
             const truncateDescription = (text) => {
               const words = text.split(' ')
-              if (words.length > 25) {
-                return words.slice(0, 25).join(' ') + '...'
-              }
-              return text
+              return words.length > 25 ? words.slice(0, 25).join(' ') + '...' : text
             }
 
             return (
               <Link to="/services" key={service.id} style={{ textDecoration: 'none' }}>
-                <div className="service-card" style={{ padding: '40px', background: '#FFFFFF', borderRadius: '32px', border: '1px solid #E2E8F0', transition: 'all 0.3s', cursor: 'pointer', height: '100%', boxSizing: 'border-box' }}>
-                  <div style={{ width: '60px', height: '60px', background: '#F0F9FF', borderRadius: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0EA5E9', marginBottom: '24px' }}>
-                    {ICON_MAP[service.icon_name] || <LayoutGrid style={{ width: '32px', height: '32px' }} />}
+                <div
+                  style={{
+                    background: '#FFFFFF',
+                    borderRadius: '24px',
+                    border: '1px solid #E2E8F0',
+                    padding: '32px',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.04)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    height: '100%',
+                    boxSizing: 'border-box',
+                    display: 'flex',
+                    flexDirection: 'column'
+                  }}
+                  className="sm:p-10 hover:-translate-y-1 hover:shadow-lg hover:border-sky-200"
+                >
+                  {/* Icon */}
+                  <div style={{
+                    width: '56px', height: '56px',
+                    background: 'linear-gradient(135deg, #0EA5E9, #0369A1)',
+                    borderRadius: '16px',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: '#FFFFFF',
+                    marginBottom: '24px',
+                    boxShadow: '0 8px 20px rgba(14,165,233,0.2)',
+                    flexShrink: 0
+                  }}>
+                    {ICON_MAP[service.icon_name] || <LayoutGrid />}
                   </div>
-                  <h3 style={{ fontSize: '22px', fontWeight: 800, color: '#0F172A', marginBottom: '16px' }}>{service.title}</h3>
-                  <p style={{ fontSize: '15px', color: '#64748B', lineHeight: 1.6, marginBottom: '24px' }}>
+
+                  {/* Title */}
+                  <h3 style={{ fontSize: '20px', fontWeight: 800, color: '#0F172A', marginBottom: '12px' }}>{service.title}</h3>
+
+                  {/* Description */}
+                  <p style={{ fontSize: '15px', color: '#64748B', lineHeight: 1.7, marginBottom: '20px', flex: 1 }}>
                     {truncateDescription(service.description)}
                   </p>
+
+                  {/* CTA */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0EA5E9', fontWeight: 700, fontSize: '14px' }}>
                     Explore Details <ArrowRight style={{ width: '16px', height: '16px' }} />
                   </div>

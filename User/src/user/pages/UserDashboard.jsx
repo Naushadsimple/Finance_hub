@@ -64,33 +64,33 @@ export default function UserDashboard() {
   return (
     <div ref={dashRef} style={{ maxWidth: '1400px', margin: '0 auto' }}>
       <div style={{ marginBottom: '32px' }}>
-        <h1 style={{ fontSize: '28px', fontWeight: 900, color: '#0F172A', letterSpacing: '-0.5px' }}>Dashboard Overview</h1>
-        <p style={{ color: '#64748B', fontSize: '15px', marginTop: '4px' }}>Real-time summary of your financial portfolio.</p>
+        <h1 style={{ fontSize: '24px', fontWeight: 900, color: '#0F172A', letterSpacing: '-0.5px' }} className="sm:text-3xl">Dashboard Overview</h1>
+        <p style={{ color: '#64748B', fontSize: '14px', marginTop: '4px' }} className="sm:text-15">Real-time summary of your financial portfolio.</p>
       </div>
 
       {/* KPI Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px', marginBottom: '40px' }}>
+      <div style={{ display: 'grid', gap: '16px', marginBottom: '32px' }} className="grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 sm:gap-6 sm:mb-10">
         {kpis.map((kpi, i) => (
-          <div key={i} className="kpi-card" style={{ 
+          <div key={i} className="kpi-card sm:p-7" style={{ 
             background: '#FFFFFF', 
             borderRadius: '24px', 
-            padding: '28px', 
+            padding: '24px', 
             border: '1px solid #E2E8F0', 
             boxShadow: '0 10px 15px -3px rgba(0,0,0,0.05)',
             position: 'relative',
             overflow: 'hidden'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-              <div style={{ width: '52px', height: '52px', background: kpi.bg, borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <kpi.icon style={{ width: '24px', height: '24px', color: kpi.color }} />
+              <div style={{ width: '48px', height: '48px', background: kpi.bg, borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="sm:w-13 sm:h-13 sm:rounded-16">
+                <kpi.icon style={{ width: '22px', height: '22px', color: kpi.color }} className="sm:w-6 sm:h-6" />
               </div>
               <div style={{ padding: '8px', borderRadius: '12px', background: '#F8FAFC' }}>
                 <ArrowUpRight style={{ width: '16px', height: '16px', color: '#94A3B8' }} />
               </div>
             </div>
             <div>
-              <p style={{ fontSize: '14px', fontWeight: 600, color: '#64748B', marginBottom: '6px' }}>{kpi.label}</p>
-              <h2 style={{ fontSize: '28px', fontWeight: 900, color: '#0F172A', margin: 0 }}>{kpi.value}</h2>
+              <p style={{ fontSize: '13px', fontWeight: 600, color: '#64748B', marginBottom: '6px' }} className="sm:text-14">{kpi.label}</p>
+              <h2 style={{ fontSize: '24px', fontWeight: 900, color: '#0F172A', margin: 0 }} className="sm:text-28">{kpi.value}</h2>
             </div>
             {/* Subtle Gradient decoration */}
             <div style={{ position: 'absolute', right: '-20px', bottom: '-20px', width: '100px', height: '100px', background: kpi.bg, filter: 'blur(40px)', opacity: 0.5, borderRadius: '50%' }} />
@@ -100,28 +100,28 @@ export default function UserDashboard() {
 
       {/* Recent Investments Section */}
       <div className="recent-section" style={{ background: '#FFFFFF', borderRadius: '24px', border: '1px solid #E2E8F0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.05)', overflow: 'hidden' }}>
-        <div style={{ padding: '24px 32px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ padding: '20px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} className="sm:p-6 sm:px-8">
           <div>
-            <h2 style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A' }}>Recent Investments</h2>
-            <p style={{ fontSize: '13px', color: '#64748B', marginTop: '2px' }}>Latest updates from your portfolio</p>
+            <h2 style={{ fontSize: '16px', fontWeight: 800, color: '#0F172A' }} className="sm:text-18">Recent Investments</h2>
+            <p style={{ fontSize: '12px', color: '#64748B', marginTop: '2px' }} className="sm:text-13">Latest updates from your portfolio</p>
           </div>
           <Link to="/user/investments" style={{ 
-            padding: '10px 20px', 
+            padding: '8px 16px', 
             background: '#F1F5F9', 
             color: '#0F172A', 
-            borderRadius: '12px', 
-            fontSize: '14px', 
+            borderRadius: '10px', 
+            fontSize: '13px', 
             fontWeight: 700, 
             textDecoration: 'none',
             transition: 'all 0.2s'
-          }}>
-            View Portfolio
+          }} className="sm:px-5 sm:py-2.5 sm:rounded-12 sm:text-14">
+            View All
           </Link>
         </div>
 
-        <div style={{ padding: '12px' }}>
+        <div style={{ padding: '8px' }} className="sm:p-3">
           {investments.length === 0 ? (
-            <div style={{ padding: '80px 32px', textAlign: 'center' }}>
+            <div style={{ padding: '60px 24px', textAlign: 'center' }} className="sm:py-20 sm:px-8">
               <div style={{ width: '64px', height: '64px', background: '#F8FAFC', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
                 <Wallet style={{ width: '32px', height: '32px', color: '#E2E8F0' }} />
               </div>
@@ -129,34 +129,34 @@ export default function UserDashboard() {
               <Link to="/user/support" style={{ color: '#0EA5E9', fontSize: '14px', marginTop: '8px', display: 'inline-block', fontWeight: 600 }}>Need help? Contact support</Link>
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }} className="sm:gap-2">
               {investments.slice(0, 5).map((inv) => (
-                <div key={inv.id} style={{ 
+                <div key={inv.id} className="sm:p-4 sm:px-5" style={{ 
                   display: 'flex', 
                   alignItems: 'center', 
                   justifyContent: 'space-between', 
-                  padding: '16px 20px', 
+                  padding: '12px 16px', 
                   borderRadius: '16px',
                   transition: 'background 0.2s',
                   cursor: 'pointer'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <div style={{ width: '44px', height: '44px', background: '#F8FAFC', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E2E8F0' }}>
-                      <Wallet style={{ width: '20px', height: '20px', color: '#3B82F6' }} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }} className="sm:gap-4">
+                    <div style={{ width: '40px', height: '40px', background: '#F8FAFC', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #E2E8F0' }} className="sm:w-11 sm:h-11">
+                      <Wallet style={{ width: '18px', height: '18px', color: '#3B82F6' }} className="sm:w-5 sm:h-5" />
                     </div>
                     <div>
-                      <p style={{ fontSize: '15px', fontWeight: 750, color: '#0F172A' }}>{formatCurrency(inv.principal)}</p>
-                      <p style={{ fontSize: '12px', color: '#64748B', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <Calendar style={{ width: '12px', height: '12px' }} />
-                        Started on {new Date(inv.start_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
+                      <p style={{ fontSize: '14px', fontWeight: 700, color: '#0F172A' }} className="sm:text-15">{formatCurrency(inv.principal)}</p>
+                      <p style={{ fontSize: '11px', color: '#64748B', display: 'flex', alignItems: 'center', gap: '4px' }} className="sm:text-12">
+                        <Calendar style={{ width: '11px', height: '11px' }} className="sm:w-3 sm:h-3" />
+                        {new Date(inv.start_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })}
                       </p>
                     </div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <span style={{
-                      padding: '6px 14px', 
+                    <span className="sm:px-3.5 sm:py-1.5 sm:text-12" style={{
+                      padding: '4px 10px', 
                       borderRadius: '999px', 
-                      fontSize: '12px', 
+                      fontSize: '10px', 
                       fontWeight: 700,
                       textTransform: 'uppercase',
                       letterSpacing: '0.5px',
@@ -164,7 +164,7 @@ export default function UserDashboard() {
                         inv.status === 'matured' ? { background: '#DBEAFE', color: '#2563EB' } :
                         { background: '#FEF3C7', color: '#D97706' })
                     }}>
-                      • {inv.status}
+                      {inv.status}
                     </span>
                   </div>
                 </div>

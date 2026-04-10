@@ -51,93 +51,95 @@ export default function MyInvestments() {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', flexWrap: 'wrap', gap: '16px' }}>
         <h1 style={{ fontSize: '24px', fontWeight: 800, color: '#1E293B' }}>My Investments</h1>
         <button 
           onClick={() => setShowModal(true)}
-          style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 24px', background: 'linear-gradient(135deg, #0EA5E9, #0369A1)', color: '#FFFFFF', borderRadius: '12px', fontWeight: 600, border: 'none', cursor: 'pointer', boxShadow: '0 4px 12px rgba(14,165,233,0.3)' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', background: 'linear-gradient(135deg, #0EA5E9, #0369A1)', color: '#FFFFFF', borderRadius: '12px', fontWeight: 600, border: 'none', cursor: 'pointer', boxShadow: '0 4px 12px rgba(14,165,233,0.3)', fontSize: '14px' }}
+          className="sm:px-6 sm:py-3 sm:text-base"
         >
-          <Plus style={{ width: '20px', height: '20px' }} /> Invest Now
+          <Plus style={{ width: '18px', height: '18px' }} className="sm:w-5 sm:h-5" /> Invest Now
         </button>
       </div>
 
       {/* Summary Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '32px' }}>
-        <div style={{ background: '#FFFFFF', borderRadius: '16px', padding: '20px', border: '1px solid #E2E8F0' }}>
+      <div style={{ display: 'grid', gap: '12px', marginBottom: '32px' }} className="grid-cols-1 sm:grid-cols-3 sm:gap-4 sm:mb-10">
+        <div style={{ background: '#FFFFFF', borderRadius: '16px', padding: '16px', border: '1px solid #E2E8F0' }} className="sm:p-5">
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-            <div style={{ width: '36px', height: '36px', background: '#E0F2FE', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Wallet style={{ width: '16px', height: '16px', color: '#0EA5E9' }} />
+            <div style={{ width: '32px', height: '32px', background: '#E0F2FE', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="sm:w-9 sm:h-9">
+              <Wallet style={{ width: '14px', height: '14px', color: '#0EA5E9' }} className="sm:w-4 sm:h-4" />
             </div>
-            <span style={{ fontSize: '14px', color: '#64748B' }}>Total Principal</span>
+            <span style={{ fontSize: '13px', color: '#64748B' }} className="sm:text-14">Total Principal</span>
           </div>
-          <p style={{ fontSize: '24px', fontWeight: 800 }}>{formatCurrency(totalPrincipal)}</p>
+          <p style={{ fontSize: '20px', fontWeight: 800 }} className="sm:text-24">{formatCurrency(totalPrincipal)}</p>
         </div>
-        <div style={{ background: '#FFFFFF', borderRadius: '16px', padding: '20px', border: '1px solid #E2E8F0' }}>
+        <div style={{ background: '#FFFFFF', borderRadius: '16px', padding: '16px', border: '1px solid #E2E8F0' }} className="sm:p-5">
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-            <div style={{ width: '36px', height: '36px', background: '#DCFCE7', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <TrendingUp style={{ width: '16px', height: '16px', color: '#22C55E' }} />
+            <div style={{ width: '32px', height: '32px', background: '#DCFCE7', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="sm:w-9 sm:h-9">
+              <TrendingUp style={{ width: '14px', height: '14px', color: '#22C55E' }} className="sm:w-4 sm:h-4" />
             </div>
-            <span style={{ fontSize: '14px', color: '#64748B' }}>Monthly Interest</span>
+            <span style={{ fontSize: '13px', color: '#64748B' }} className="sm:text-14">Monthly Interest</span>
           </div>
-          <p style={{ fontSize: '24px', fontWeight: 800, color: '#22C55E' }}>{formatCurrency(calculateMonthlyInterest(totalPrincipal))}</p>
+          <p style={{ fontSize: '20px', fontWeight: 800, color: '#22C55E' }} className="sm:text-24">{formatCurrency(calculateMonthlyInterest(totalPrincipal))}</p>
         </div>
-        <div style={{ background: '#FFFFFF', borderRadius: '16px', padding: '20px', border: '1px solid #E2E8F0' }}>
+        <div style={{ background: '#FFFFFF', borderRadius: '16px', padding: '16px', border: '1px solid #E2E8F0' }} className="sm:p-5">
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-            <div style={{ width: '36px', height: '36px', background: '#F3E8FF', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Calendar style={{ width: '16px', height: '16px', color: '#9333EA' }} />
+            <div style={{ width: '32px', height: '32px', background: '#F3E8FF', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="sm:w-9 sm:h-9">
+              <Calendar style={{ width: '14px', height: '14px', color: '#9333EA' }} className="sm:w-4 sm:h-4" />
             </div>
-            <span style={{ fontSize: '14px', color: '#64748B' }}>Annual Interest</span>
+            <span style={{ fontSize: '13px', color: '#64748B' }} className="sm:text-14">Annual Interest</span>
           </div>
-          <p style={{ fontSize: '24px', fontWeight: 800, color: '#7C3AED' }}>{formatCurrency(calculateAnnualInterest(totalPrincipal))}</p>
+          <p style={{ fontSize: '20px', fontWeight: 800, color: '#7C3AED' }} className="sm:text-24">{formatCurrency(calculateAnnualInterest(totalPrincipal))}</p>
         </div>
       </div>
 
       {/* Investment Cards */}
       {investments.length === 0 ? (
-        <div style={{ background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', padding: '64px', textAlign: 'center' }}>
-          <Wallet style={{ width: '64px', height: '64px', color: '#E2E8F0', margin: '0 auto 16px' }} />
-          <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '8px' }}>No Investments Yet</h3>
-          <p style={{ color: '#64748B' }}>Submit a request to start your investment journey!</p>
-          <button onClick={() => setShowModal(true)} style={{ marginTop: '20px', padding: '10px 20px', background: '#E0F2FE', color: '#0369A1', borderRadius: '10px', border: 'none', fontWeight: 600, cursor: 'pointer' }}>Make First Request</button>
+        <div style={{ background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', padding: '48px 20px', textAlign: 'center' }} className="sm:p-16">
+          <Wallet style={{ width: '48px', height: '48px', color: '#E2E8F0', margin: '0 auto 16px' }} className="sm:w-16 sm:h-16" />
+          <h3 style={{ fontSize: '16px', fontWeight: 700, marginBottom: '8px' }} className="sm:text-18">No Investments Yet</h3>
+          <p style={{ color: '#64748B', fontSize: '14px' }}>Submit a request to start your investment journey!</p>
+          <button onClick={() => setShowModal(true)} style={{ marginTop: '20px', padding: '10px 20px', background: '#E0F2FE', color: '#0369A1', borderRadius: '10px', border: 'none', fontWeight: 600, cursor: 'pointer', fontSize: '14px' }}>Make First Request</button>
         </div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }} className="sm:gap-4">
           {investments.map((inv) => {
             const monthly = parseFloat(inv.principal) * MONTHLY_RATE
             const annual = monthly * 12
             return (
-              <div key={inv.id} style={{ background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', padding: '24px', transition: 'all 0.3s' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+              <div key={inv.id} style={{ background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', padding: '20px', transition: 'all 0.3s' }} className="sm:p-6">
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <div style={{ width: '48px', height: '48px', background: '#E0F2FE', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Wallet style={{ width: '24px', height: '24px', color: '#0EA5E9' }} />
+                    <div style={{ width: '40px', height: '40px', background: '#E0F2FE', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="sm:w-12 sm:h-12">
+                      <Wallet style={{ width: '20px', height: '20px', color: '#0EA5E9' }} className="sm:w-6 sm:h-6" />
                     </div>
                     <div>
-                      <p style={{ fontSize: '18px', fontWeight: 800 }}>{formatCurrency(inv.principal)}</p>
-                      <p style={{ fontSize: '12px', color: '#64748B' }}>Principal Amount</p>
+                      <p style={{ fontSize: '16px', fontWeight: 800 }} className="sm:text-18">{formatCurrency(inv.principal)}</p>
+                      <p style={{ fontSize: '11px', color: '#64748B' }} className="sm:text-12">Principal Amount</p>
                     </div>
                   </div>
                   <span style={{
-                    padding: '6px 16px', borderRadius: '999px', fontSize: '14px', fontWeight: 600,
+                    padding: '4px 12px', borderRadius: '999px', fontSize: '12px', fontWeight: 600,
+                    textTransform: 'uppercase', letterSpacing: '0.5px',
                     ...(inv.status === 'active' ? { background: '#DCFCE7', color: '#16A34A' } :
                       inv.status === 'matured' ? { background: '#DBEAFE', color: '#2563EB' } :
                         inv.status === 'pending' ? { background: '#FEF3C7', color: '#D97706' } :
                         { background: '#FEE2E2', color: '#EF4444' })
-                  }}>
-                    {inv.status.charAt(0).toUpperCase() + inv.status.slice(1)}
+                  }} className="sm:px-4 sm:py-1.5 sm:text-14">
+                    {inv.status}
                   </span>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '16px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }} className="sm:grid-cols-4 sm:gap-4">
                   {[
-                    { label: 'Monthly Return', value: formatCurrency(monthly), color: '#22C55E' },
-                    { label: 'Annual Return', value: formatCurrency(annual), color: '#7C3AED' },
+                    { label: 'Monthly ROI', value: formatCurrency(monthly), color: '#22C55E' },
+                    { label: 'Annual ROI', value: formatCurrency(annual), color: '#7C3AED' },
                     { label: 'Start Date', value: new Date(inv.start_date).toLocaleDateString('en-IN'), color: '#1E293B' },
-                    { label: 'Tenure', value: `${inv.tenure_months} months`, color: '#1E293B' },
+                    { label: 'Tenure', value: `${inv.tenure_months}m`, color: '#1E293B' },
                   ].map((item, i) => (
-                    <div key={i} style={{ padding: '12px', background: '#F8FAFC', borderRadius: '12px' }}>
-                      <p style={{ fontSize: '12px', color: '#64748B', marginBottom: '4px' }}>{item.label}</p>
-                      <p style={{ fontWeight: 700, color: item.color }}>{item.value}</p>
+                    <div key={i} style={{ padding: '10px', background: '#F8FAFC', borderRadius: '12px' }} className="sm:p-3">
+                      <p style={{ fontSize: '10px', color: '#64748B', marginBottom: '4px' }} className="sm:text-11">{item.label}</p>
+                      <p style={{ fontWeight: 700, color: item.color, fontSize: '13px' }} className="sm:text-14">{item.value}</p>
                     </div>
                   ))}
                 </div>

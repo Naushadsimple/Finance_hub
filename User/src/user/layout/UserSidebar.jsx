@@ -32,15 +32,11 @@ export default function UserSidebar({ open, onClose }) {
     <>
       {open && <div onClick={onClose} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.3)', zIndex: 40 }} className="lg:hidden" />}
 
-      <aside style={{
-        position: 'fixed', top: 0, left: 0, height: '100%', width: '260px',
-        background: '#FFFFFF', borderRight: '1px solid #E2E8F0', zIndex: 50,
-        display: 'flex', flexDirection: 'column',
-        transition: 'transform 0.3s',
-        transform: open ? 'translateX(0)' : 'translateX(-100%)',
-      }} className="lg:!translate-x-0">
+      <aside 
+        className={`fixed top-0 left-0 h-full w-[260px] bg-white border-r border-[#E2E8F0] z-50 flex flex-col transition-transform duration-300 lg:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}
+      >
         {/* Logo */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '64px', padding: '0 20px', borderBottom: '1px solid #E2E8F0' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px', padding: '0 20px', borderBottom: '1px solid #E2E8F0' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <div style={{ width: '32px', height: '32px', background: 'linear-gradient(135deg, #0EA5E9, #0369A1)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <TrendingUp style={{ width: '16px', height: '16px', color: '#FFFFFF' }} />
@@ -72,19 +68,6 @@ export default function UserSidebar({ open, onClose }) {
           </button>
         </div>
       </aside>
-
-      {/* Mobile Bottom Nav */}
-      <div className="lg:hidden" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, background: '#FFFFFF', borderTop: '1px solid #E2E8F0', zIndex: 40, display: 'flex' }}>
-        {navItems.map((item) => (
-          <NavLink key={item.to} to={item.to} style={({ isActive }) => ({ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', padding: '10px 0', fontSize: '12px', fontWeight: 500, textDecoration: 'none', color: isActive ? '#0EA5E9' : '#64748B' })}>
-            <item.icon style={{ width: '20px', height: '20px' }} />
-            {item.label}
-          </NavLink>
-        ))}
-        <NavLink to="/user/profile" style={({ isActive }) => ({ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', padding: '10px 0', fontSize: '12px', fontWeight: 500, textDecoration: 'none', color: isActive ? '#0EA5E9' : '#64748B' })}>
-          <User style={{ width: '20px', height: '20px' }} /> Profile
-        </NavLink>
-      </div>
     </>
   )
 }
