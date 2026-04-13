@@ -1,11 +1,8 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabaseClient'
-import { Settings as SettingsIcon, Save, Shield, Bell, Globe, Percent } from 'lucide-react'
+import { Settings as SettingsIcon, Save, Shield, Bell } from 'lucide-react'
 
 export default function Settings() {
-  const [monthlyRate, setMonthlyRate] = useState('1.00')
-  const [companyName, setCompanyName] = useState('Finance Hub')
-  const [supportEmail, setSupportEmail] = useState('support@financehub.com')
   const [saved, setSaved] = useState(false)
   const [newPass, setNewPass] = useState('')
   const [confirmPass, setConfirmPass] = useState('')
@@ -33,42 +30,7 @@ export default function Settings() {
 
       {/* Main Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
-        {/* Business Settings */}
-        <div style={{ background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', padding: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-            <div style={{ width: '40px', height: '40px', background: '#E0F2FE', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Globe style={{ width: '20px', height: '20px', color: '#0EA5E9' }} />
-            </div>
-            <h3 style={{ fontWeight: 700 }}>Business Settings</h3>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Company Name</label>
-              <input value={companyName} onChange={(e) => setCompanyName(e.target.value)} style={inputStyle} />
-            </div>
-            <div>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Support Email</label>
-              <input value={supportEmail} onChange={(e) => setSupportEmail(e.target.value)} type="email" style={inputStyle} />
-            </div>
-          </div>
-        </div>
 
-        {/* Investment Settings */}
-        <div style={{ background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', padding: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-            <div style={{ width: '40px', height: '40px', background: '#DCFCE7', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Percent style={{ width: '20px', height: '20px', color: '#22C55E' }} />
-            </div>
-            <h3 style={{ fontWeight: 700 }}>Investment Settings</h3>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Monthly Interest Rate (%)</label>
-              <input value={monthlyRate} onChange={(e) => setMonthlyRate(e.target.value)} type="number" step="0.01" style={inputStyle} />
-              <p style={{ fontSize: '12px', color: '#64748B', marginTop: '4px' }}>Annual Rate: {(parseFloat(monthlyRate) * 12).toFixed(2)}%</p>
-            </div>
-          </div>
-        </div>
 
         {/* Security & Credentials */}
         <div style={{ background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', padding: '24px' }}>
