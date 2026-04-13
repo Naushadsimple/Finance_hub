@@ -1,4 +1,4 @@
-import { Mail } from 'lucide-react'
+import { Mail, Phone, MapPin } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -39,7 +39,31 @@ export default function Footer() {
                 <div style={{ color: '#0EA5E9', flexShrink: 0 }}><Mail style={{ width: '20px', height: '20px' }} /></div>
                 <div>
                   <p style={{ fontSize: '12px', color: '#64748B', margin: 0 }}>Email us at</p>
-                  <p style={{ fontSize: '14px', color: '#FFFFFF', margin: 0, fontWeight: 600 }} className="sm:text-15">support@financehub.com</p>
+                  <p style={{ fontSize: '14px', color: '#FFFFFF', margin: 0, fontWeight: 600 }} className="sm:text-15">support@financehubonline.com</p>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '16px' }}>
+                <div style={{ color: '#0EA5E9', flexShrink: 0 }}><Phone style={{ width: '20px', height: '20px' }} /></div>
+                <div>
+                  <p style={{ fontSize: '12px', color: '#64748B', margin: 0 }}>Call us</p>
+                  <p style={{ fontSize: '14px', color: '#FFFFFF', margin: 0, fontWeight: 600 }} className="sm:text-15">+91 2235323769</p>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '16px' }}>
+                <div style={{ color: '#0EA5E9', flexShrink: 0 }}><MapPin style={{ width: '20px', height: '20px' }} /></div>
+                <div>
+                  <p style={{ fontSize: '12px', color: '#64748B', margin: 0 }}>Address 1</p>
+                  <p style={{ fontSize: '13px', color: '#FFFFFF', margin: 0, lineHeight: 1.5 }}>25, Ramanathan Street, Kilpauk, Chennai, Tamil Nadu – 600010</p>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '16px' }}>
+                <div style={{ color: '#0EA5E9', flexShrink: 0 }}><MapPin style={{ width: '20px', height: '20px' }} /></div>
+                <div>
+                  <p style={{ fontSize: '12px', color: '#64748B', margin: 0 }}>Address 2</p>
+                  <p style={{ fontSize: '13px', color: '#FFFFFF', margin: 0, lineHeight: 1.5 }}>46, Travelers Bungalow Road, Arasaradi, Madurai, Tamil Nadu – 625010</p>
                 </div>
               </div>
             </div>

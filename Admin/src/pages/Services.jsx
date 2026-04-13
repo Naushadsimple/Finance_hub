@@ -17,7 +17,7 @@ export default function Services() {
   const [showModal, setShowModal] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null)
   const [selectedService, setSelectedService] = useState(null)
-  const [formData, setFormData] = useState({ title: '', description: '', icon_name: 'TrendingUp', is_active: true })
+  const [formData, setFormData] = useState({ title: '', description: '', icon_name: 'TrendingUp', is_active: true, sort_order: 0 })
   const [isSaving, setIsSaving] = useState(false)
   const [formError, setFormError] = useState('')
 
@@ -28,6 +28,7 @@ export default function Services() {
       description: service.description || '',
       icon_name: service.icon_name || 'TrendingUp',
       is_active: service.is_active,
+      sort_order: service.sort_order || 0,
     })
     setShowModal(true)
   }
@@ -54,7 +55,7 @@ export default function Services() {
 
       setShowModal(false)
       setSelectedService(null)
-      setFormData({ title: '', description: '', icon_name: 'TrendingUp', is_active: true })
+      setFormData({ title: '', description: '', icon_name: 'TrendingUp', is_active: true, sort_order: 0 })
     } catch (err) {
       setFormError(err.message || 'Error saving service')
     } finally {
@@ -73,7 +74,7 @@ export default function Services() {
           <h1 style={{ fontSize: '24px', fontWeight: 800, color: '#1E293B' }}>Managed Services</h1>
           <p style={{ color: '#64748B' }}>These services are displayed on the user home page</p>
         </div>
-        <button onClick={() => { setSelectedService(null); setFormData({ title: '', description: '', icon_name: 'TrendingUp', is_active: true }); setShowModal(true); }} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', background: '#0F172A', color: '#FFFFFF', borderRadius: '12px', fontWeight: 600, border: 'none', cursor: 'pointer' }}>
+        <button onClick={() => { setSelectedService(null); setFormData({ title: '', description: '', icon_name: 'TrendingUp', is_active: true, sort_order: 0 }); setShowModal(true); }} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', background: '#0F172A', color: '#FFFFFF', borderRadius: '12px', fontWeight: 600, border: 'none', cursor: 'pointer' }}>
           <Plus style={{ width: '16px', height: '16px' }} /> Add Service
         </button>
       </div>
@@ -107,15 +108,22 @@ export default function Services() {
       {/* Modal */}
       {showModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '24px' }}>
-          <div style={{ background: '#FFFFFF', borderRadius: '20px', width: '100%', maxWidth: '600px', padding: '32px' }}>
+          <div style={{ background: '#FFFFFF', borderRadius: '20px', width: '100%', maxWidth: '600px', padding: '32px', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
               <h2 style={{ fontSize: '20px', fontWeight: 800 }}>{selectedService ? 'Edit Service' : 'New Service'}</h2>
-              <button onClick={() => setShowModal(false)} style={{ padding: '4px', background: 'none', border: 'none', cursor: 'pointer' }}><X style={{ width: '20px', height: '20px' }} /></button>
+               <button onClick={() => setShowModal(false)} style={{ padding: '8px', background: '#F1F5F9', border: 'none', borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }} className="hover:scale-110">
+                <X style={{ width: '20px', height: '20px', color: '#64748B' }} />
+              </button>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Title</label>
                 <input value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} placeholder="e.g. Mutual Fund" style={inputStyle} />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Position (Sort Order)</label>
+                <input type="number" value={formData.sort_order} onChange={(e) => setFormData({ ...formData, sort_order: parseInt(e.target.value) || 0 })} placeholder="0 for first" style={inputStyle} />
+                <p style={{ fontSize: '11px', color: '#64748B', marginTop: '4px' }}>Lower numbers (e.g. 0) appear first.</p>
               </div>
               <div style={{ marginBottom: '40px' }}>
                 <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Description</label>
