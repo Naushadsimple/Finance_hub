@@ -30,15 +30,10 @@ export default function ServiceSection() {
           <h2 style={{ fontWeight: 900, color: '#0F172A', marginTop: '12px', letterSpacing: '-1px' }} className="text-2xl sm:text-4xl">Financial Solutions for Everyone</h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 ql-snow">
           {services.slice(0, 3).map((service) => {
-            const truncateDescription = (text) => {
-              const words = text.split(' ')
-              return words.length > 25 ? words.slice(0, 25).join(' ') + '...' : text
-            }
-
             return (
-              <Link to="/services" key={service.id} style={{ textDecoration: 'none' }}>
+              <Link to={`/services/${service.slug}`} key={service.id} style={{ textDecoration: 'none' }}>
                 <div
                   style={{
                     background: '#FFFFFF',
@@ -53,7 +48,7 @@ export default function ServiceSection() {
                     display: 'flex',
                     flexDirection: 'column'
                   }}
-                  className="sm:p-10 hover:-translate-y-1 hover:shadow-lg hover:border-sky-200"
+                  className="sm:p-10 hover:-translate-y-1 hover:shadow-lg hover:border-sky-200 group"
                 >
                   {/* Icon */}
                   <div style={{
@@ -73,13 +68,15 @@ export default function ServiceSection() {
                   <h3 style={{ fontSize: '20px', fontWeight: 800, color: '#0F172A', marginBottom: '12px' }}>{service.title}</h3>
 
                   {/* Description */}
-                  <p style={{ fontSize: '15px', color: '#64748B', lineHeight: 1.7, marginBottom: '20px', flex: 1 }}>
-                    {truncateDescription(service.description)}
-                  </p>
+                  <div 
+                    className="ql-editor"
+                    style={{ fontSize: '15px', color: '#64748B', lineHeight: 1.7, marginBottom: '20px', flex: 1, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', padding: 0 }}
+                    dangerouslySetInnerHTML={{ __html: service.description }}
+                  />
 
                   {/* CTA */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0EA5E9', fontWeight: 700, fontSize: '14px' }}>
-                    Explore Details <ArrowRight style={{ width: '16px', height: '16px' }} />
+                    View Details <ArrowRight className="group-hover:translate-x-1 transition-transform" style={{ width: '16px', height: '16px' }} />
                   </div>
                 </div>
               </Link>

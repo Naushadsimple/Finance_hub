@@ -29,7 +29,7 @@ export default function HeroSection() {
 
   const stats = [
     { icon: <Users />, label: 'Happy Clients', value: '10k+' },
-    { icon: <TrendingUp />, label: 'Returns p.a.', value: '12% Fixed' },
+
     { icon: <Shield />, label: 'Asset Security', value: '100%' },
   ]
 
@@ -54,7 +54,7 @@ export default function HeroSection() {
           </h1>
 
           <p style={{ fontSize: '18px', color: '#64748B', lineHeight: 1.6, maxWidth: '600px', marginBottom: '32px' }} className="mx-auto lg:mx-0 lg:text-lg">
-            Invest in expert-curated portfolios with <b>12% Fixed Annual Returns</b>. No market volatility, just consistent growth powered by strategic asset management.
+            Our expert-curated portfolios are designed to balance risk and reward, helping you grow your wealth with clarity and discipline.
           </p>
 
           <div className="flex flex-col gap-[12px] sm:flex-row sm:justify-center lg:justify-start" style={{ marginBottom: '50px' }}>
@@ -86,7 +86,7 @@ export default function HeroSection() {
                 </div>
                 <h3 style={{ fontWeight: 800, color: '#0F172A' }}>Performance Overview</h3>
               </div>
-              <div style={{ background: '#DCFCE7', color: '#16A34A', padding: '4px 12px', borderRadius: '8px', fontSize: '12px', fontWeight: 700 }}>+12% P.A</div>
+
             </div>
 
             <div style={{ height: '200px', display: 'flex', alignItems: 'flex-end', gap: '12px', marginBottom: '24px' }}>
@@ -97,12 +97,12 @@ export default function HeroSection() {
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
               <div style={{ padding: '16px', background: '#F8FAFC', borderRadius: '16px' }}>
-                <p style={{ fontSize: '12px', color: '#64748B', marginBottom: '4px' }}>Monthly Yield</p>
-                <p style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A' }}>1.0% Fixed</p>
+                <p style={{ fontSize: '13px', color: '#0f72fdff', marginBottom: '4px' }}><b>Our Expertise</b></p>
+                <p style={{ fontSize: '12px', fontWeight: 800, color: '#0F172A' }}>Making Your Financial Dream Come True</p>
               </div>
               <div style={{ padding: '16px', background: '#F8FAFC', borderRadius: '16px' }}>
-                <p style={{ fontSize: '12px', color: '#64748B', marginBottom: '4px' }}>Safety Score</p>
-                <p style={{ fontSize: '18px', fontWeight: 800, color: '#0EA5E9' }}>99/100</p>
+                <p style={{ fontSize: '12px', color: '#0f72fdff', marginBottom: '4px' }}><b>Safety Score</b></p>
+                <p style={{ fontSize: '15px', fontWeight: 800, color: '#0EA5E9' }}>99/100</p>
               </div>
             </div>
           </div>
@@ -117,10 +117,7 @@ export default function HeroSection() {
             </div>
           </div>
 
-          <div className="floating-card" style={{ position: 'absolute', bottom: '-10px', left: '-15px', background: '#0F172A', padding: '16px 20px', borderRadius: '20px', boxShadow: '0 20px 40px rgba(0,0,0,0.2)', color: '#FFFFFF', zIndex: 20 }}>
-            <p style={{ fontSize: '12px', color: '#94A3B8', marginBottom: '4px' }}>Live AUM</p>
-            <p style={{ fontSize: '20px', fontWeight: 800 }}>₹843.5 Crore</p>
-          </div>
+
         </div>
 
       </div>

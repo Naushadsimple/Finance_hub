@@ -37,11 +37,10 @@ export default function LandingPage() {
       {/* Trust Stats Section */}
       <section style={{ padding: '40px 20px', position: 'relative', marginTop: '-40px', zIndex: 30 }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', background: '#FFFFFF', borderRadius: '24px', padding: '32px', boxShadow: '0 20px 50px rgba(0,0,0,0.06)', border: '1px solid #E2E8F0' }} className="sm:p-10">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
               { label: 'Trust Score', value: '4.9/5', desc: 'TrustPilot' },
               { label: 'Total Assets', value: '\u20b9843Cr+', desc: 'Under Management' },
-              { label: 'Return Rate', value: '12%', desc: 'Annual Yield' },
               { label: 'Active Users', value: '10,000+', desc: 'Investors' },
             ].map((s, i) => (
               <div key={i} style={{ textAlign: 'center' }}>

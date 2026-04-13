@@ -52,11 +52,11 @@ export default function Services() {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 ql-snow">
               {services.map((service) => (
-                <div
+                <Link
+                  to={`/services/${service.slug}`}
                   key={service.id}
-                  onClick={scrollToLead}
                   style={{
                     background: '#FFFFFF',
                     borderRadius: '24px',
@@ -67,9 +67,10 @@ export default function Services() {
                     cursor: 'pointer',
                     display: 'flex',
                     flexDirection: 'column',
-                    height: '100%'
+                    height: '100%',
+                    textDecoration: 'none'
                   }}
-                  className="sm:p-10 hover:-translate-y-1 hover:shadow-lg hover:border-sky-200"
+                  className="sm:p-10 hover:-translate-y-1 hover:shadow-lg hover:border-sky-200 group"
                 >
                   {/* Icon */}
                   <div style={{
@@ -94,16 +95,18 @@ export default function Services() {
                   </h3>
 
                   {/* Description */}
-                  <p style={{ fontSize: '15px', color: '#64748B', lineHeight: 1.75, marginBottom: '24px', flex: 1 }}>
-                    {service.description}
-                  </p>
+                  <div 
+                    className="ql-editor"
+                    style={{ fontSize: '15px', color: '#64748B', lineHeight: 1.75, marginBottom: '24px', flex: 1, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', padding: 0 }}
+                    dangerouslySetInnerHTML={{ __html: service.description }}
+                  />
 
                   {/* CTA */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0EA5E9', fontWeight: 700, fontSize: '14px' }}>
-                    <span>Enquire Now</span>
-                    <ArrowRight style={{ width: '16px', height: '16px' }} />
+                    <span>Learn More</span>
+                    <ArrowRight className="group-hover:translate-x-1 transition-transform" style={{ width: '16px', height: '16px' }} />
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}

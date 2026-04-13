@@ -16,6 +16,7 @@ const MyInvestments = lazy(() => import('./user/pages/MyInvestments'))
 const Certificates = lazy(() => import('./user/pages/Certificates'))
 const Profile = lazy(() => import('./user/pages/Profile'))
 const Support = lazy(() => import('./user/pages/Support'))
+const ServiceDetail = lazy(() => import('./public/ServiceDetail'))
 
 function LoadingFallback() {
   return (
@@ -45,6 +46,7 @@ export default function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/services/:slug" element={<ServiceDetail />} />
 
           {/* Protected User Routes */}
           <Route path="/user" element={<ProtectedRoute><UserLayout /></ProtectedRoute>}>

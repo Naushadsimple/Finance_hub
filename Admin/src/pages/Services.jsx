@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useServices } from '../hooks/useServices'
 import { LayoutGrid, Plus, Edit2, Trash2, X, ShieldAlert, TrendingUp, PieChart, ShieldCheck, ArrowUpRight, CheckCircle2 } from 'lucide-react'
+import ReactQuill from 'react-quill'
 
 const ICON_OPTIONS = [
   { name: 'TrendingUp', icon: <TrendingUp /> },
@@ -17,6 +18,8 @@ export default function Services() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null)
   const [selectedService, setSelectedService] = useState(null)
   const [formData, setFormData] = useState({ title: '', description: '', icon_name: 'TrendingUp', is_active: true })
+  const [isSaving, setIsSaving] = useState(false)
+  const [formError, setFormError] = useState('')
 
   const openEdit = (service) => {
     setSelectedService(service)
@@ -30,14 +33,33 @@ export default function Services() {
   }
 
   const handleSave = async () => {
-    if (selectedService) {
-      await updateService(selectedService.id, formData)
-    } else {
-      await createService(formData)
+    if (!formData.title.trim()) return setFormError('Title is required')
+    
+    setIsSaving(true)
+    setFormError('')
+    
+    // Auto-generate slug
+    const slug = formData.title.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '');
+    const dataToSave = { ...formData, slug }
+    
+    try {
+      let err;
+      if (selectedService) {
+        err = await updateService(selectedService.id, dataToSave)
+      } else {
+        err = await createService(dataToSave)
+      }
+      
+      if (err) throw err
+
+      setShowModal(false)
+      setSelectedService(null)
+      setFormData({ title: '', description: '', icon_name: 'TrendingUp', is_active: true })
+    } catch (err) {
+      setFormError(err.message || 'Error saving service')
+    } finally {
+      setIsSaving(false)
     }
-    setShowModal(false)
-    setSelectedService(null)
-    setFormData({ title: '', description: '', icon_name: 'TrendingUp', is_active: true })
   }
 
   const inputStyle = { width: '100%', padding: '12px', borderRadius: '12px', border: '1px solid #E2E8F0', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }
@@ -69,7 +91,10 @@ export default function Services() {
               </div>
             </div>
             <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#1E293B', marginBottom: '8px' }}>{service.title}</h3>
-            <p style={{ fontSize: '14px', color: '#64748B', lineHeight: 1.5, marginBottom: '16px' }}>{service.description}</p>
+            <div 
+              style={{ fontSize: '14px', color: '#64748B', lineHeight: 1.5, marginBottom: '16px', maxHeight: '100px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}
+              dangerouslySetInnerHTML={{ __html: service.description }}
+            />
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ fontSize: '12px', fontWeight: 600, color: service.is_active ? '#16A34A' : '#EF4444', padding: '4px 8px', background: service.is_active ? '#DCFCE7' : '#FEE2E2', borderRadius: '6px' }}>
                 {service.is_active ? 'Active' : 'Inactive'}
@@ -82,7 +107,7 @@ export default function Services() {
       {/* Modal */}
       {showModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '24px' }}>
-          <div style={{ background: '#FFFFFF', borderRadius: '20px', width: '100%', maxWidth: '480px', padding: '32px' }}>
+          <div style={{ background: '#FFFFFF', borderRadius: '20px', width: '100%', maxWidth: '600px', padding: '32px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
               <h2 style={{ fontSize: '20px', fontWeight: 800 }}>{selectedService ? 'Edit Service' : 'New Service'}</h2>
               <button onClick={() => setShowModal(false)} style={{ padding: '4px', background: 'none', border: 'none', cursor: 'pointer' }}><X style={{ width: '20px', height: '20px' }} /></button>
@@ -92,9 +117,26 @@ export default function Services() {
                 <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Title</label>
                 <input value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} placeholder="e.g. Mutual Fund" style={inputStyle} />
               </div>
-              <div>
+              <div style={{ marginBottom: '40px' }}>
                 <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Description</label>
-                <textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} rows={3} style={{ ...inputStyle, resize: 'none' }} />
+                <div style={{ height: '200px' }}>
+                  <ReactQuill 
+                    theme="snow" 
+                    value={formData.description} 
+                    onChange={(val) => setFormData({ ...formData, description: val })}
+                    style={{ height: '150px' }}
+                    modules={{
+                      toolbar: [
+                        [{ 'header': [1, 2, false] }],
+                        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                        [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+                        ['link'],
+                        ['clean'],
+                        [{ 'color': [] }, { 'background': [] }]
+                      ],
+                    }}
+                  />
+                </div>
               </div>
               <div>
                 <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Icon</label>
@@ -110,8 +152,19 @@ export default function Services() {
                 <input type="checkbox" checked={formData.is_active} onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })} id="is_active" />
                 <label htmlFor="is_active" style={{ fontSize: '14px', cursor: 'pointer' }}>Visible to users</label>
               </div>
-              <button onClick={handleSave} style={{ width: '100%', padding: '14px', background: '#0F172A', color: '#FFFFFF', borderRadius: '12px', fontWeight: 700, border: 'none', cursor: 'pointer' }}>
-                {selectedService ? 'Update Service' : 'Create Service'}
+              {formError && <div style={{ color: '#EF4444', fontSize: '13px', background: '#FEF2F2', padding: '10px', borderRadius: '8px' }}>{formError}</div>}
+
+              <button 
+                onClick={handleSave} 
+                disabled={isSaving}
+                style={{ 
+                  width: '100%', padding: '14px', background: '#0F172A', color: '#FFFFFF', 
+                  borderRadius: '12px', fontWeight: 700, border: 'none', 
+                  cursor: isSaving ? 'not-allowed' : 'pointer',
+                  opacity: isSaving ? 0.7 : 1
+                }}
+              >
+                {isSaving ? 'Saving...' : (selectedService ? 'Update Service' : 'Create Service')}
               </button>
             </div>
           </div>
