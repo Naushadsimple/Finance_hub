@@ -35,14 +35,14 @@ export default function Services() {
 
   const handleSave = async () => {
     if (!formData.title.trim()) return setFormError('Title is required')
-    
+
     setIsSaving(true)
     setFormError('')
-    
+
     // Auto-generate slug
     const slug = formData.title.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '');
     const dataToSave = { ...formData, slug }
-    
+
     try {
       let err;
       if (selectedService) {
@@ -50,7 +50,7 @@ export default function Services() {
       } else {
         err = await createService(dataToSave)
       }
-      
+
       if (err) throw err
 
       setShowModal(false)
@@ -92,7 +92,7 @@ export default function Services() {
               </div>
             </div>
             <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#1E293B', marginBottom: '8px' }}>{service.title}</h3>
-            <div 
+            <div
               style={{ fontSize: '14px', color: '#64748B', lineHeight: 1.5, marginBottom: '16px', maxHeight: '100px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}
               dangerouslySetInnerHTML={{ __html: service.description }}
             />
@@ -111,7 +111,7 @@ export default function Services() {
           <div style={{ background: '#FFFFFF', borderRadius: '20px', width: '100%', maxWidth: '600px', padding: '32px', maxHeight: '90vh', overflowY: 'auto' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
               <h2 style={{ fontSize: '20px', fontWeight: 800 }}>{selectedService ? 'Edit Service' : 'New Service'}</h2>
-               <button onClick={() => setShowModal(false)} style={{ padding: '8px', background: '#F1F5F9', border: 'none', borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }} className="hover:scale-110">
+              <button onClick={() => setShowModal(false)} style={{ padding: '8px', background: '#F1F5F9', border: 'none', borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }} className="hover:scale-110">
                 <X style={{ width: '20px', height: '20px', color: '#64748B' }} />
               </button>
             </div>
@@ -128,16 +128,16 @@ export default function Services() {
               <div style={{ marginBottom: '40px' }}>
                 <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Description</label>
                 <div style={{ height: '200px' }}>
-                  <ReactQuill 
-                    theme="snow" 
-                    value={formData.description} 
+                  <ReactQuill
+                    theme="snow"
+                    value={formData.description}
                     onChange={(val) => setFormData({ ...formData, description: val })}
                     style={{ height: '150px' }}
                     modules={{
                       toolbar: [
                         [{ 'header': [1, 2, false] }],
                         ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                        [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+                        [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
                         ['link'],
                         ['clean'],
                         [{ 'color': [] }, { 'background': [] }]
@@ -162,12 +162,12 @@ export default function Services() {
               </div>
               {formError && <div style={{ color: '#EF4444', fontSize: '13px', background: '#FEF2F2', padding: '10px', borderRadius: '8px' }}>{formError}</div>}
 
-              <button 
-                onClick={handleSave} 
+              <button
+                onClick={handleSave}
                 disabled={isSaving}
-                style={{ 
-                  width: '100%', padding: '14px', background: '#0F172A', color: '#FFFFFF', 
-                  borderRadius: '12px', fontWeight: 700, border: 'none', 
+                style={{
+                  width: '100%', padding: '14px', background: '#0F172A', color: '#FFFFFF',
+                  borderRadius: '12px', fontWeight: 700, border: 'none',
                   cursor: isSaving ? 'not-allowed' : 'pointer',
                   opacity: isSaving ? 0.7 : 1
                 }}

@@ -32,24 +32,57 @@ export default function AdminDashboard() {
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
       const recentInvCount = investments.filter(inv => new Date(inv.created_at) >= thirtyDaysAgo).length;
 
+      const leads = leadsRes.data || []
+      const pendingLeads = leads.filter(l => l.status === 'new').length
+
       setStats({
         clients: profilesRes.count || 0,
         totalAum,
         activeInvestments: active.length,
         recentInvestments: recentInvCount,
         totalInvestments: investments.length,
+        pendingLeads,
       })
 
       setRecentLeads(leadsRes.data || [])
       setAuditLogs(logsRes.data || [])
 
-      // Generate chart data (mock monthly data based on investments)
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
-      setChartData(months.map((month, i) => ({
-        month,
-        aum: Math.round(totalAum * (0.5 + i * 0.1)),
-        returns: Math.round(totalAum * 0.01 * (i + 1)),
-      })))
+      // Generate dynamic chart data based on actual investments
+      const last6Months = []
+      for (let i = 5; i >= 0; i--) {
+        const d = new Date()
+        d.setMonth(d.getMonth() - i)
+        last6Months.push({
+          month: d.toLocaleString('default', { month: 'short' }),
+          date: new Date(d.getFullYear(), d.getMonth() + 1, 0), // Last day of that month
+          aum: 0,
+          returns: 0
+        })
+      }
+
+      const activeInvestments = investments.filter(inv => inv.status === 'active')
+      
+      const processedChartData = last6Months.map(slot => {
+        // AUM at the end of this month (all investments started on or before this month)
+        const monthEnd = slot.date
+        const aumAtMonthEnd = activeInvestments
+          .filter(inv => new Date(inv.start_date || inv.created_at) <= monthEnd)
+          .reduce((sum, inv) => sum + parseFloat(inv.principal || 0), 0)
+
+        // Returns in this specific month (interest from investments active during this month)
+        // For simplicity, we calculate interest for all investments active on monthEnd
+        const returnsInMonth = activeInvestments
+          .filter(inv => new Date(inv.start_date || inv.created_at) <= monthEnd)
+          .reduce((sum, inv) => sum + (parseFloat(inv.principal || 0) * parseFloat(inv.monthly_rate || 0)), 0)
+
+        return {
+          month: slot.month,
+          aum: Math.round(aumAtMonthEnd),
+          returns: Math.round(returnsInMonth)
+        }
+      })
+
+      setChartData(processedChartData)
     } finally {
       setLoading(false)
     }
@@ -67,10 +100,16 @@ export default function AdminDashboard() {
     )
   }
 
+  const formatAxis = (v) => {
+    if (v >= 100000) return `₹${(v / 100000).toFixed(1)}L`
+    if (v >= 1000) return `₹${(v / 1000).toFixed(0)}K`
+    return `₹${v}`
+  }
+
   const kpis = [
     { icon: Users, label: 'Total Users', value: stats.clients, gradient: 'linear-gradient(135deg, #3B82F6, #2563EB)' },
-    { icon: TrendingUp, label: '30-Day Investments', value: stats.recentInvestments, gradient: 'linear-gradient(135deg, #10B981, #059669)' },
-    { icon: Wallet, label: 'All Investments', value: stats.totalInvestments, gradient: 'linear-gradient(135deg, #8B5CF6, #7C3AED)' },
+    { icon: TrendingUp, label: 'Active Investments', value: stats.activeInvestments, gradient: 'linear-gradient(135deg, #10B981, #059669)' },
+    { icon: Mail, label: 'Pending Leads', value: stats.pendingLeads, gradient: 'linear-gradient(135deg, #F59E0B, #D97706)' },
     { icon: Wallet, label: 'Total AUM', value: formatCurrency(stats.totalAum), gradient: 'linear-gradient(135deg, #F97316, #EA580C)' },
   ]
 
@@ -106,7 +145,7 @@ export default function AdminDashboard() {
               <defs><linearGradient id="aumGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#0EA5E9" stopOpacity={0.3} /><stop offset="95%" stopColor="#0EA5E9" stopOpacity={0} /></linearGradient></defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
               <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#64748B' }} />
-              <YAxis tick={{ fontSize: 12, fill: '#64748B' }} tickFormatter={(v) => `₹${(v / 100000).toFixed(0)}L`} />
+              <YAxis tick={{ fontSize: 12, fill: '#64748B' }} tickFormatter={formatAxis} />
               <Tooltip formatter={(v) => formatCurrency(v)} />
               <Area type="monotone" dataKey="aum" stroke="#0EA5E9" fill="url(#aumGrad)" strokeWidth={2} />
             </AreaChart>
@@ -118,7 +157,7 @@ export default function AdminDashboard() {
             <BarChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
               <XAxis dataKey="month" tick={{ fontSize: 12, fill: '#64748B' }} />
-              <YAxis tick={{ fontSize: 12, fill: '#64748B' }} tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}K`} />
+              <YAxis tick={{ fontSize: 12, fill: '#64748B' }} tickFormatter={formatAxis} />
               <Tooltip formatter={(v) => formatCurrency(v)} />
               <Bar dataKey="returns" fill="#22C55E" radius={[6, 6, 0, 0]} />
             </BarChart>
