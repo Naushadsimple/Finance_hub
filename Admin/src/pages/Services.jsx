@@ -74,21 +74,21 @@ export default function Services() {
           <h1 style={{ fontSize: '24px', fontWeight: 800, color: '#1E293B' }}>Managed Services</h1>
           <p style={{ color: '#64748B' }}>These services are displayed on the user home page</p>
         </div>
-        <button onClick={() => { setSelectedService(null); setFormData({ title: '', description: '', icon_name: 'TrendingUp', is_active: true, sort_order: 0 }); setShowModal(true); }} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', background: '#0F172A', color: '#FFFFFF', borderRadius: '12px', fontWeight: 600, border: 'none', cursor: 'pointer' }}>
+        <button onClick={() => { setSelectedService(null); setFormData({ title: '', description: '', icon_name: 'TrendingUp', is_active: true, sort_order: 0 }); setShowModal(true); }} className="btn-animate" style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', background: '#0F172A', color: '#FFFFFF', borderRadius: '12px', fontWeight: 600, border: 'none', cursor: 'pointer' }}>
           <Plus style={{ width: '16px', height: '16px' }} /> Add Service
         </button>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '20px' }}>
         {services.map((service) => (
-          <div key={service.id} style={{ background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', padding: '24px', position: 'relative', opacity: service.is_active ? 1 : 0.6 }}>
+          <div key={service.id} className="card-hover" style={{ background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', padding: '24px', position: 'relative', opacity: service.is_active ? 1 : 0.6 }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '16px' }}>
-              <div style={{ width: '48px', height: '48px', background: '#F0F9FF', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0EA5E9' }}>
+              <div className="icon-animate" style={{ width: '48px', height: '48px', background: '#F0F9FF', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0EA5E9' }}>
                 {ICON_OPTIONS.find(o => o.name === service.icon_name)?.icon || <LayoutGrid />}
               </div>
               <div style={{ display: 'flex', gap: '8px' }}>
-                <button onClick={() => openEdit(service)} style={{ padding: '8px', color: '#0EA5E9', background: '#F0F9FF', border: 'none', borderRadius: '8px', cursor: 'pointer' }}><Edit2 style={{ width: '14px', height: '14px' }} /></button>
-                <button onClick={() => setShowDeleteConfirm(service.id)} style={{ padding: '8px', color: '#EF4444', background: '#FEF2F2', border: 'none', borderRadius: '8px', cursor: 'pointer' }}><Trash2 style={{ width: '14px', height: '14px' }} /></button>
+                <button onClick={() => openEdit(service)} className="btn-animate" style={{ padding: '8px', color: '#0EA5E9', background: '#F0F9FF', border: 'none', borderRadius: '8px', cursor: 'pointer' }}><Edit2 style={{ width: '14px', height: '14px' }} /></button>
+                <button onClick={() => setShowDeleteConfirm(service.id)} className="btn-animate" style={{ padding: '8px', color: '#EF4444', background: '#FEF2F2', border: 'none', borderRadius: '8px', cursor: 'pointer' }}><Trash2 style={{ width: '14px', height: '14px' }} /></button>
               </div>
             </div>
             <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#1E293B', marginBottom: '8px' }}>{service.title}</h3>
@@ -165,6 +165,7 @@ export default function Services() {
               <button
                 onClick={handleSave}
                 disabled={isSaving}
+                className="btn-animate"
                 style={{
                   width: '100%', padding: '14px', background: '#0F172A', color: '#FFFFFF',
                   borderRadius: '12px', fontWeight: 700, border: 'none',

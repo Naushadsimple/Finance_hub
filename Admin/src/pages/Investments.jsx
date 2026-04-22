@@ -108,7 +108,7 @@ export default function Investments() {
           <h1 style={{ fontSize: '24px', fontWeight: 800, color: '#1E293B' }}>Investments</h1>
           <p style={{ color: '#64748B' }}>Active AUM: <span style={{ fontWeight: 700, color: '#16A34A' }}>{formatCurrency(totalAum)}</span></p>
         </div>
-        <button onClick={() => { setSelectedInvestment(null); setFormData({ profile_id: '', principal: '', start_date: '', tenure_months: 12, status: 'active' }); setShowModal(true); }} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', background: '#0F172A', color: '#FFFFFF', borderRadius: '12px', fontWeight: 600, border: 'none', cursor: 'pointer' }}>
+        <button onClick={() => { setSelectedInvestment(null); setFormData({ profile_id: '', principal: '', start_date: '', tenure_months: 12, status: 'active' }); setShowModal(true); }} className="btn-animate" style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', background: '#0F172A', color: '#FFFFFF', borderRadius: '12px', fontWeight: 600, border: 'none', cursor: 'pointer' }}>
           <Plus style={{ width: '16px', height: '16px' }} /> New Investment
         </button>
       </div>
@@ -121,7 +121,7 @@ export default function Investments() {
         </div>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
           {['all', 'pending', 'active', 'matured', 'rejected'].map(s => (
-            <button key={s} onClick={() => setStatusFilter(s)} style={{ padding: '8px 16px', borderRadius: '10px', fontSize: '13px', fontWeight: 600, border: '1px solid', cursor: 'pointer', ...(statusFilter === s ? { background: '#0F172A', color: '#FFFFFF', borderColor: '#0F172A' } : { background: '#FFFFFF', color: '#64748B', borderColor: '#E2E8F0' }) }}>
+            <button key={s} onClick={() => setStatusFilter(s)} className="btn-animate" style={{ padding: '8px 16px', borderRadius: '10px', fontSize: '13px', fontWeight: 600, border: '1px solid', cursor: 'pointer', ...(statusFilter === s ? { background: '#0F172A', color: '#FFFFFF', borderColor: '#0F172A' } : { background: '#FFFFFF', color: '#64748B', borderColor: '#E2E8F0' }) }}>
               {s.charAt(0).toUpperCase() + s.slice(1)}
             </button>
           ))}
@@ -162,21 +162,21 @@ export default function Investments() {
                     <div style={{ display: 'flex', gap: '8px' }}>
                       {inv.status === 'pending' && (
                         <>
-                          <button onClick={() => handleStatusUpdate(inv.id, 'active')} title="Approve" style={{ padding: '6px', color: '#16A34A', background: '#DCFCE7', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
+                          <button onClick={() => handleStatusUpdate(inv.id, 'active')} title="Approve" className="btn-animate" style={{ padding: '6px', color: '#16A34A', background: '#DCFCE7', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
                             <CheckCircle style={{ width: '14px', height: '14px' }} />
                           </button>
-                          <button onClick={() => handleStatusUpdate(inv.id, 'rejected')} title="Reject" style={{ padding: '6px', color: '#EF4444', background: '#FEE2E2', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
+                          <button onClick={() => handleStatusUpdate(inv.id, 'rejected')} title="Reject" className="btn-animate" style={{ padding: '6px', color: '#EF4444', background: '#FEE2E2', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
                             <XCircle style={{ width: '14px', height: '14px' }} />
                           </button>
                         </>
                       )}
-                      <button onClick={() => setShowDetails(inv)} title="View Details" style={{ padding: '6px', color: '#10B981', background: '#D1FAE5', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
+                      <button onClick={() => setShowDetails(inv)} title="View Details" className="btn-animate" style={{ padding: '6px', color: '#10B981', background: '#D1FAE5', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
                         <Wallet style={{ width: '14px', height: '14px' }} />
                       </button>
-                      <button onClick={() => openEdit(inv)} title="Edit" style={{ padding: '6px', color: '#0EA5E9', background: '#F0F9FF', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
+                      <button onClick={() => openEdit(inv)} title="Edit" className="btn-animate" style={{ padding: '6px', color: '#0EA5E9', background: '#F0F9FF', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
                         <Edit2 style={{ width: '14px', height: '14px' }} />
                       </button>
-                      <button onClick={() => setShowDeleteConfirm(inv.id)} style={{ padding: '6px', color: '#EF4444', background: '#FEF2F2', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
+                      <button onClick={() => setShowDeleteConfirm(inv.id)} className="btn-animate" style={{ padding: '6px', color: '#EF4444', background: '#FEF2F2', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
                         <Trash2 style={{ width: '14px', height: '14px' }} />
                       </button>
                     </div>

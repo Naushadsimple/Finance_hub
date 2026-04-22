@@ -58,10 +58,10 @@ export default function HeroSection() {
           </p>
 
           <div className="flex flex-col gap-[12px] sm:flex-row sm:justify-center lg:justify-start" style={{ marginBottom: '50px' }}>
-            <Link to="/sign-up" style={{ padding: '16px 28px', background: 'linear-gradient(135deg, #0EA5E9, #0369A1)', color: '#FFFFFF', borderRadius: '16px', fontWeight: 700, fontSize: '15px', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', boxShadow: '0 20px 40px rgba(14,165,233,0.3)' }} className="sm:px-9 sm:py-4 sm:text-base">
+            <Link to="/sign-up" className="btn-animate sm:px-9 sm:py-4 sm:text-base" style={{ padding: '16px 28px', background: 'linear-gradient(135deg, #0EA5E9, #0369A1)', color: '#FFFFFF', borderRadius: '16px', fontWeight: 700, fontSize: '15px', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', boxShadow: '0 20px 40px rgba(14,165,233,0.3)' }}>
               Start Investing <ArrowRight style={{ width: '20px', height: '20px' }} />
             </Link>
-            <Link to="/services" style={{ padding: '16px 28px', background: '#FFFFFF', color: '#1E293B', borderRadius: '16px', fontWeight: 700, fontSize: '15px', textDecoration: 'none', border: '1px solid #E2E8F0', display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="sm:px-9 sm:py-4 sm:text-base">
+            <Link to="/services" className="btn-animate sm:px-9 sm:py-4 sm:text-base" style={{ padding: '16px 28px', background: '#FFFFFF', color: '#1E293B', borderRadius: '16px', fontWeight: 700, fontSize: '15px', textDecoration: 'none', border: '1px solid #E2E8F0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               Explore Services
             </Link>
           </div>
@@ -78,7 +78,7 @@ export default function HeroSection() {
 
         <div style={{ position: 'relative' }} className="hidden lg:block">
           {/* Main Illustration Area */}
-          <div style={{ background: '#FFFFFF', borderRadius: '40px', padding: '40px', border: '1px solid #E2E8F0', boxShadow: '0 40px 80px rgba(0,0,0,0.06)', position: 'relative', zIndex: 10 }}>
+          <div className="card-hover" style={{ background: '#FFFFFF', borderRadius: '40px', padding: '40px', border: '1px solid #E2E8F0', boxShadow: '0 40px 80px rgba(0,0,0,0.06)', position: 'relative', zIndex: 10 }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <div style={{ width: '40px', height: '40px', background: '#0EA5E9', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF' }}>

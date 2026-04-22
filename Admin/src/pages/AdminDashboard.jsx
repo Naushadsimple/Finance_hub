@@ -123,15 +123,21 @@ export default function AdminDashboard() {
       {/* KPI Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', marginBottom: '32px' }}>
         {kpis.map((kpi, i) => (
-          <div key={i} style={{ background: '#FFFFFF', borderRadius: '16px', padding: '20px', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-              <div style={{ width: '40px', height: '40px', background: kpi.gradient, borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <kpi.icon style={{ width: '20px', height: '20px', color: '#FFFFFF' }} />
+          <div key={i} className="card-hover" style={{ background: '#FFFFFF', borderRadius: '16px', padding: '24px', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+              <div className="icon-animate" style={{ width: '48px', height: '48px', background: kpi.gradient, borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 16px -4px rgba(0,0,0,0.1)' }}>
+                <kpi.icon style={{ width: '24px', height: '24px', color: '#FFFFFF' }} />
               </div>
-              <ArrowUpRight style={{ width: '16px', height: '16px', color: '#94A3B8' }} />
+              <div style={{ padding: '8px', background: '#F8FAFC', borderRadius: '10px' }}>
+                <ArrowUpRight style={{ width: '16px', height: '16px', color: '#0EA5E9' }} />
+              </div>
             </div>
-            <p style={{ fontSize: '14px', color: '#64748B', marginBottom: '4px' }}>{kpi.label}</p>
-            <p style={{ fontSize: '24px', fontWeight: 800, color: '#1E293B' }}>{kpi.value}</p>
+            <p style={{ fontSize: '14px', fontWeight: 600, color: '#64748B', marginBottom: '6px' }}>{kpi.label}</p>
+            <h2 style={{ fontSize: '28px', fontWeight: 900, color: '#0F172A', letterSpacing: '-0.5px' }}>{kpi.value}</h2>
+            <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+               <span style={{ fontSize: '12px', color: '#16A34A', fontWeight: 700 }}>+12%</span>
+               <span style={{ fontSize: '12px', color: '#94A3B8' }}>from last month</span>
+            </div>
           </div>
         ))}
       </div>

@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { TrendingUp, LogIn, Menu, X } from 'lucide-react'
+import { LogIn, Menu, X } from 'lucide-react'
 import { useState } from 'react'
+import logo from '../assets/logo.webp'
 
 export default function PublicHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -19,12 +20,13 @@ export default function PublicHeader() {
   return (
     <header style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(16px)', borderBottom: '1px solid #E2E8F0' }}>
       <div className="sm:px-6" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 16px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '64px' }}>
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
-            <div style={{ width: '36px', height: '36px', background: 'linear-gradient(135deg, #0EA5E9, #0369A1)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(14,165,233,0.2)' }}>
-              <TrendingUp style={{ width: '20px', height: '20px', color: '#FFFFFF' }} />
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '80px' }}>
+          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '14px', textDecoration: 'none' }}>
+            <img src={logo} alt="Finance Hub" style={{ width: '48px', height: '48px', objectFit: 'contain', filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))' }} />
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span className="sm:text-2xl" style={{ fontSize: '20px', fontWeight: 900, color: '#0F172A', letterSpacing: '-0.5px', lineHeight: 1 }}>FinanceHub</span>
+              <span style={{ fontSize: '10px', fontWeight: 700, color: '#64748B', letterSpacing: '1.5px', textTransform: 'uppercase' }}>One Stop Solution</span>
             </div>
-            <span className="sm:text-xl" style={{ fontSize: '19px', fontWeight: 900, color: '#0F172A', letterSpacing: '-0.5px' }}>Finance Hub</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -67,10 +69,11 @@ export default function PublicHeader() {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{ width: '32px', height: '32px', background: 'linear-gradient(135deg, #0EA5E9, #0369A1)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <TrendingUp style={{ width: '16px', height: '16px', color: '#FFFFFF' }} />
+            <img src={logo} alt="Logo" style={{ width: '32px', height: '32px' }} />
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span style={{ fontWeight: 800, color: '#0F172A', fontSize: '15px' }}>FinanceHub</span>
+              <span style={{ fontSize: '8px', fontWeight: 600, color: '#64748B', letterSpacing: '0.5px' }}>One Stop Solution</span>
             </div>
-            <span style={{ fontWeight: 800, color: '#0F172A', fontSize: '16px' }}>Finance Hub</span>
           </div>
           <button onClick={() => setMenuOpen(false)} style={{ background: '#F1F5F9', border: 'none', padding: '8px', borderRadius: '10px', cursor: 'pointer', color: '#64748B' }}>
             <X style={{ width: '18px', height: '18px' }} />

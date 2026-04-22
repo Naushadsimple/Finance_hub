@@ -94,7 +94,7 @@ export default function Leads() {
         </div>
         <div style={{ display: 'flex', gap: '8px' }}>
           {['all', 'new', 'contacted', 'converted', 'closed'].map(s => (
-            <button key={s} onClick={() => setStatusFilter(s)} style={{ padding: '8px 16px', borderRadius: '10px', fontSize: '14px', fontWeight: 500, border: '1px solid', cursor: 'pointer', ...(statusFilter === s ? { background: '#0F172A', color: '#FFFFFF', borderColor: '#0F172A' } : { background: '#FFFFFF', color: '#64748B', borderColor: '#E2E8F0' }) }}>
+            <button key={s} onClick={() => setStatusFilter(s)} className="btn-animate" style={{ padding: '8px 16px', borderRadius: '10px', fontSize: '14px', fontWeight: 500, border: '1px solid', cursor: 'pointer', ...(statusFilter === s ? { background: '#0F172A', color: '#FFFFFF', borderColor: '#0F172A' } : { background: '#FFFFFF', color: '#64748B', borderColor: '#E2E8F0' }) }}>
               {s.charAt(0).toUpperCase() + s.slice(1)} ({counts[s]})
             </button>
           ))}
@@ -110,7 +110,7 @@ export default function Leads() {
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {filtered.map((lead) => (
-            <div key={lead.id} style={{ background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div key={lead.id} className="card-hover" style={{ background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1 }}>
                 <div style={{ width: '48px', height: '48px', background: statusColors[lead.status]?.bg || '#F1F5F9', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: statusColors[lead.status]?.text, fontWeight: 700 }}>
                   {lead.full_name?.charAt(0)?.toUpperCase()}
@@ -132,14 +132,14 @@ export default function Leads() {
                 </span>
                 <div style={{ display: 'flex', gap: '8px' }}>
                   {statusFlow[lead.status] && (
-                    <button onClick={() => updateLead(lead.id, { status: statusFlow[lead.status] })} style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '6px 14px', background: '#F0F9FF', color: '#0EA5E9', borderRadius: '10px', fontWeight: 600, fontSize: '12px', border: '1px solid #BAE6FD', cursor: 'pointer' }}>
+                    <button onClick={() => updateLead(lead.id, { status: statusFlow[lead.status] })} className="btn-animate" style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '6px 14px', background: '#F0F9FF', color: '#0EA5E9', borderRadius: '10px', fontWeight: 600, fontSize: '12px', border: '1px solid #BAE6FD', cursor: 'pointer' }}>
                       {statusFlow[lead.status]} <ArrowRight style={{ width: '12px', height: '12px' }} />
                     </button>
                     )}
-                  <button onClick={() => openEdit(lead)} style={{ padding: '8px', color: '#0EA5E9', background: '#F0F9FF', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>
+                  <button onClick={() => openEdit(lead)} className="btn-animate" style={{ padding: '8px', color: '#0EA5E9', background: '#F0F9FF', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>
                     <Edit2 style={{ width: '14px', height: '14px' }} />
                   </button>
-                  <button onClick={() => setShowDeleteConfirm(lead.id)} style={{ padding: '8px', color: '#EF4444', background: '#FEF2F2', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>
+                  <button onClick={() => setShowDeleteConfirm(lead.id)} className="btn-animate" style={{ padding: '8px', color: '#EF4444', background: '#FEF2F2', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>
                     <Trash2 style={{ width: '14px', height: '14px' }} />
                   </button>
                 </div>
@@ -162,7 +162,7 @@ export default function Leads() {
               <div><label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Email</label><input value={editFormData.email} onChange={(e) => setEditFormData({ ...editFormData, email: e.target.value })} style={inputStyle} /></div>
               <div><label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Phone</label><input value={editFormData.phone} onChange={(e) => setEditFormData({ ...editFormData, phone: e.target.value })} style={inputStyle} /></div>
               <div><label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px' }}>Proposed Amount</label><input value={editFormData.proposed_amount} onChange={(e) => setEditFormData({ ...editFormData, proposed_amount: e.target.value })} type="number" style={inputStyle} /></div>
-              <button onClick={handleUpdate} style={{ width: '100%', padding: '14px', background: '#0F172A', color: '#FFFFFF', borderRadius: '12px', fontWeight: 700, border: 'none', cursor: 'pointer' }}>Update Lead</button>
+              <button onClick={handleUpdate} className="btn-animate" style={{ width: '100%', padding: '14px', background: '#0F172A', color: '#FFFFFF', borderRadius: '12px', fontWeight: 700, border: 'none', cursor: 'pointer' }}>Update Lead</button>
             </div>
           </div>
         </div>

@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useAuthStore } from '../store/authStore'
-import { LogIn, Mail, Lock, Eye, EyeOff, TrendingUp } from 'lucide-react'
+import { LogIn, Mail, Lock, Eye, EyeOff } from 'lucide-react'
+import logo from '../assets/logo.svg'
 
 const schema = z.object({
   email: z.string().email('Enter a valid email'),
@@ -46,11 +47,12 @@ export default function SignIn() {
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #F0F9FF, #FFFFFF, #E0F2FE)', padding: '24px' }}>
       <div style={{ width: '100%', maxWidth: '440px' }}>
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
-            <div style={{ width: '40px', height: '40px', background: 'linear-gradient(135deg, #0EA5E9, #0369A1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <TrendingUp style={{ width: '24px', height: '24px', color: '#FFFFFF' }} />
+          <Link to="/" style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
+            <img src={logo} alt="Finance Hub" style={{ width: '56px', height: '56px', filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.1))' }} />
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span style={{ fontSize: '24px', fontWeight: 900, color: '#1E293B', letterSpacing: '-0.5px' }}>FinanceHub</span>
+              <span style={{ fontSize: '10px', fontWeight: 700, color: '#64748B', letterSpacing: '2px', textTransform: 'uppercase' }}>One Stop Solution</span>
             </div>
-            <span style={{ fontSize: '24px', fontWeight: 800, color: '#1E293B' }}>Finance Hub</span>
           </Link>
         </div>
 

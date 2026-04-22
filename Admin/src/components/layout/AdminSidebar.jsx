@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAdminAuthStore } from '../../store/adminAuthStore'
-import { LayoutDashboard, Users, Wallet, FileText, Mail, Settings, LogOut, ShieldCheck, X, LayoutGrid, MessageSquare } from 'lucide-react'
+import { LayoutDashboard, Users, Wallet, FileText, Mail, Settings, LogOut, X, LayoutGrid, MessageSquare } from 'lucide-react'
+import logo from '../../assets/logo.svg'
 
 const navItems = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -61,12 +62,10 @@ export default function AdminSidebar({ open, onClose }) {
         {/* Brand Section */}
         <div style={{ padding: '32px 24px', position: 'relative' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '40px', height: '40px', background: 'linear-gradient(135deg, #0EA5E9 0%, #2563EB 100%)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 16px rgba(14, 165, 233, 0.3)' }}>
-              <ShieldCheck style={{ width: '24px', height: '24px', color: '#FFFFFF' }} />
-            </div>
+            <img src={logo} alt="Finance Hub" style={{ width: '44px', height: '44px', filter: 'brightness(0) invert(1) drop-shadow(0 0 8px rgba(56,189,248,0.4))' }} />
             <div>
-              <p style={{ fontWeight: 800, color: '#FFFFFF', fontSize: '18px', letterSpacing: '-0.5px', marginBottom: '-2px' }}>Finance Hub</p>
-              <p style={{ fontSize: '11px', fontWeight: 600, color: '#0EA5E9', textTransform: 'uppercase', letterSpacing: '1px' }}>Admin Dashboard</p>
+              <p style={{ fontWeight: 800, color: '#FFFFFF', fontSize: '18px', letterSpacing: '-0.5px', marginBottom: '-2px' }}>FinanceHub</p>
+              <p style={{ fontSize: '10px', fontWeight: 600, color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '1px' }}>One Stop Solution</p>
             </div>
             <button onClick={onClose} className="lg:hidden" style={{ marginLeft: 'auto', padding: '8px', color: '#94A3B8', background: 'rgba(255,255,255,0.05)', border: 'none', borderRadius: '10px', cursor: 'pointer' }}>
               <X style={{ width: '18px', height: '18px' }} />

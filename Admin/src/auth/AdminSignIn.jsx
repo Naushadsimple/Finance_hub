@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useAdminAuthStore } from '../store/adminAuthStore'
-import { LogIn, Mail, Lock, Eye, EyeOff, ShieldCheck } from 'lucide-react'
+import { LogIn, Mail, Lock, Eye, EyeOff } from 'lucide-react'
+import logo from '../assets/logo.svg'
 
 const schema = z.object({
   email: z.string().min(1, 'Email or username is required'),
@@ -56,9 +57,12 @@ export default function AdminSignIn() {
       <div style={{ width: '100%', maxWidth: '440px' }}>
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', color: '#FFFFFF' }}>
-            <ShieldCheck style={{ width: '40px', height: '40px', color: '#0EA5E9' }} />
-            <span style={{ fontSize: '24px', fontWeight: 800, letterSpacing: '-0.5px' }}>Finance Hub Admin</span>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
+            <img src={logo} alt="Finance Hub" style={{ width: '64px', height: '64px', filter: 'brightness(0) invert(1) drop-shadow(0 0 12px rgba(56,189,248,0.5))' }} />
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span style={{ fontSize: '28px', fontWeight: 900, color: '#FFFFFF', letterSpacing: '-0.5px' }}>FinanceHub</span>
+              <span style={{ fontSize: '10px', fontWeight: 700, color: '#38BDF8', letterSpacing: '2px', textTransform: 'uppercase' }}>One Stop Solution</span>
+            </div>
           </div>
         </div>
 

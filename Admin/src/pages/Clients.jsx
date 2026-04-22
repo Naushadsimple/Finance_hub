@@ -86,7 +86,7 @@ export default function Clients() {
           <h1 style={{ fontSize: '24px', fontWeight: 800, color: '#1E293B' }}>Clients</h1>
           <p style={{ color: '#64748B' }}>{clients.length} registered clients</p>
         </div>
-        <button onClick={openCreate} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', background: '#0F172A', color: '#FFFFFF', borderRadius: '12px', fontWeight: 600, border: 'none', cursor: 'pointer' }}>
+        <button onClick={openCreate} className="btn-animate" style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', background: '#0F172A', color: '#FFFFFF', borderRadius: '12px', fontWeight: 600, border: 'none', cursor: 'pointer' }}>
           <Plus style={{ width: '16px', height: '16px' }} /> Add Client
         </button>
       </div>
@@ -106,7 +106,7 @@ export default function Clients() {
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '16px' }}>
           {filteredClients.map((client) => (
-            <div key={client.id} style={{ background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', padding: '20px', transition: 'all 0.3s' }}>
+            <div key={client.id} className="card-hover" style={{ background: '#FFFFFF', borderRadius: '16px', border: '1px solid #E2E8F0', padding: '20px', transition: 'all 0.3s' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
                 <div style={{ width: '48px', height: '48px', background: '#0F172A', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF', fontWeight: 700 }}>
                   {client.full_name?.charAt(0)?.toUpperCase() || '?'}
@@ -116,16 +116,16 @@ export default function Clients() {
                   <p style={{ fontSize: '12px', color: '#0EA5E9', fontWeight: 500 }}>{client.client_code || 'Pending'}</p>
                 </div>
                 <div style={{ display: 'flex', gap: '8px' }}>
-                  <button onClick={() => openEdit(client)} title="Edit" style={{ padding: '8px', color: '#0EA5E9', background: '#F0F9FF', border: '1px solid #BAE6FD', borderRadius: '8px', cursor: 'pointer' }}>
+                  <button onClick={() => openEdit(client)} title="Edit" className="btn-animate" style={{ padding: '8px', color: '#0EA5E9', background: '#F0F9FF', border: '1px solid #BAE6FD', borderRadius: '8px', cursor: 'pointer' }}>
                     <Edit2 style={{ width: '14px', height: '14px' }} />
                   </button>
-                  <button onClick={() => handleStatusUpdate(client.id, client.status === 'suspended' ? 'active' : 'suspended')} title={client.status === 'suspended' ? 'Unsuspend' : 'Suspend'} style={{ padding: '8px', color: '#F59E0B', background: '#FEF3C7', border: '1px solid #FDE68A', borderRadius: '8px', cursor: 'pointer' }}>
+                  <button onClick={() => handleStatusUpdate(client.id, client.status === 'suspended' ? 'active' : 'suspended')} title={client.status === 'suspended' ? 'Unsuspend' : 'Suspend'} className="btn-animate" style={{ padding: '8px', color: '#F59E0B', background: '#FEF3C7', border: '1px solid #FDE68A', borderRadius: '8px', cursor: 'pointer' }}>
                     <Users style={{ width: '14px', height: '14px' }} />
                   </button>
-                  <button onClick={() => handleStatusUpdate(client.id, client.status === 'banned' ? 'active' : 'banned')} title={client.status === 'banned' ? 'Unban' : 'Ban'} style={{ padding: '8px', color: '#9333EA', background: '#F3E8FF', border: '1px solid #E9D5FF', borderRadius: '8px', cursor: 'pointer' }}>
+                  <button onClick={() => handleStatusUpdate(client.id, client.status === 'banned' ? 'active' : 'banned')} title={client.status === 'banned' ? 'Unban' : 'Ban'} className="btn-animate" style={{ padding: '8px', color: '#9333EA', background: '#F3E8FF', border: '1px solid #E9D5FF', borderRadius: '8px', cursor: 'pointer' }}>
                     <ShieldAlert style={{ width: '14px', height: '14px' }} />
                   </button>
-                  <button onClick={() => setShowDeleteConfirm(client.id)} title="Delete" style={{ padding: '8px', color: '#EF4444', background: '#FEF2F2', border: '1px solid #FEE2E2', borderRadius: '8px', cursor: 'pointer' }}>
+                  <button onClick={() => setShowDeleteConfirm(client.id)} title="Delete" className="btn-animate" style={{ padding: '8px', color: '#EF4444', background: '#FEF2F2', border: '1px solid #FEE2E2', borderRadius: '8px', cursor: 'pointer' }}>
                     <Trash2 style={{ width: '14px', height: '14px' }} />
                   </button>
                 </div>
@@ -180,7 +180,7 @@ export default function Clients() {
                 </div>
               )}
 
-              <button onClick={handleSave} style={{ width: '100%', padding: '14px', background: '#0F172A', color: '#FFFFFF', borderRadius: '12px', fontWeight: 700, border: 'none', cursor: 'pointer', marginTop: '8px' }}>
+              <button onClick={handleSave} className="btn-animate" style={{ width: '100%', padding: '14px', background: '#0F172A', color: '#FFFFFF', borderRadius: '12px', fontWeight: 700, border: 'none', cursor: 'pointer', marginTop: '8px' }}>
                 {selectedClient ? 'Update Client' : 'Create Client'}
               </button>
             </div>

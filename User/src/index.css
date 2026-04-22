@@ -88,3 +88,39 @@ body {
   overflow: hidden;
   line-clamp: 2;
 }
+
+/* Micro-interactions */
+.btn-animate {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-animate:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.btn-animate:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08) !important;
+  border-color: #0EA5E933 !important;
+}
+
+.icon-animate {
+  transition: transform 0.3s ease;
+}
+
+.card-hover:hover .icon-animate {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.smooth-transition {
+  transition: all 0.3s ease-in-out;
+}

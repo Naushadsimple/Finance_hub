@@ -30,9 +30,8 @@ export default function Testimonials() {
                 padding: '32px',
                 position: 'relative',
                 boxShadow: '0 4px 16px rgba(0,0,0,0.04)',
-                transition: 'all 0.3s ease'
               }}
-              className="sm:p-10 hover:-translate-y-1 hover:shadow-lg"
+              className="sm:p-10 card-hover"
             >
               <Quote style={{ position: 'absolute', top: '28px', right: '28px', width: '36px', height: '36px', color: '#E2E8F0' }} />
               <div style={{ display: 'flex', gap: '4px', marginBottom: '20px' }}>

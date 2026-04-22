@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/authStore'
-import { TrendingUp, LayoutDashboard, Wallet, FileText, User, HelpCircle, LogOut, X } from 'lucide-react'
+import { LayoutDashboard, Wallet, FileText, User, HelpCircle, LogOut, X } from 'lucide-react'
+import logo from '../../assets/logo.svg'
 
 const navItems = [
   { to: '/user/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -37,11 +38,12 @@ export default function UserSidebar({ open, onClose }) {
       >
         {/* Logo */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px', padding: '0 20px', borderBottom: '1px solid #E2E8F0' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{ width: '32px', height: '32px', background: 'linear-gradient(135deg, #0EA5E9, #0369A1)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <TrendingUp style={{ width: '16px', height: '16px', color: '#FFFFFF' }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <img src={logo} alt="Finance Hub" style={{ width: '32px', height: '32px' }} />
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span style={{ fontWeight: 800, color: '#1E293B', fontSize: '14px', lineHeight: 1 }}>FinanceHub</span>
+              <span style={{ fontSize: '7px', fontWeight: 600, color: '#64748B', letterSpacing: '0.5px' }}>One Stop Solution</span>
             </div>
-            <span style={{ fontWeight: 700, color: '#1E293B' }}>Finance Hub</span>
           </div>
           <button onClick={onClose} className="lg:hidden" style={{ padding: '4px', color: '#64748B', background: 'none', border: 'none', cursor: 'pointer' }}>
             <X style={{ width: '20px', height: '20px' }} />

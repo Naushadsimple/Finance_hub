@@ -79,12 +79,11 @@ export default function LandingPage() {
                     borderRadius: '20px',
                     border: '1px solid #E2E8F0',
                     padding: '24px',
-                    boxShadow: '0 4px 16px rgba(0,0,0,0.04)',
-                    transition: 'all 0.3s ease'
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.04)'
                   }}
-                  className="sm:p-8 hover:-translate-y-1 hover:shadow-lg hover:border-sky-200"
+                  className="sm:p-8 card-hover"
                 >
-                  <div style={{
+                  <div className="icon-animate" style={{
                     width: '48px', height: '48px',
                     background: 'linear-gradient(135deg, #0EA5E9, #0369A1)',
                     borderRadius: '14px',

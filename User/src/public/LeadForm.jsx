@@ -170,7 +170,7 @@ export default function LeadForm() {
                   {errors.proposed_amount && <p style={{ color: '#EF4444', fontSize: '12px', marginTop: '4px' }}>{errors.proposed_amount.message}</p>}
                 </div>
 
-                <button type="submit" disabled={loading} style={{ width: '100%', padding: '16px', background: 'linear-gradient(135deg, #0EA5E9, #0369A1)', color: '#FFFFFF', borderRadius: '14px', fontWeight: 700, fontSize: '15px', border: 'none', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.6 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 8px 24px rgba(14,165,233,0.3)', transition: 'all 0.2s' }}>
+                <button type="submit" disabled={loading} className="btn-animate" style={{ width: '100%', padding: '16px', background: 'linear-gradient(135deg, #0EA5E9, #0369A1)', color: '#FFFFFF', borderRadius: '14px', fontWeight: 700, fontSize: '15px', border: 'none', cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.6 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: '0 8px 24px rgba(14,165,233,0.3)' }}>
                   {loading ? <div style={{ width: '20px', height: '20px', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#fff', borderRadius: '50%', animation: 'spin 1s linear infinite' }} /> : <><Send style={{ width: '20px', height: '20px' }} /> Submit Inquiry</>}
                 </button>
               </form>

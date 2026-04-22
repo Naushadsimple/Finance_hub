@@ -41,17 +41,16 @@ export default function ServiceSection() {
                     border: '1px solid #E2E8F0',
                     padding: '32px',
                     boxShadow: '0 4px 16px rgba(0,0,0,0.04)',
-                    transition: 'all 0.3s ease',
                     cursor: 'pointer',
                     height: '100%',
                     boxSizing: 'border-box',
                     display: 'flex',
                     flexDirection: 'column'
                   }}
-                  className="sm:p-10 hover:-translate-y-1 hover:shadow-lg hover:border-sky-200 group"
+                  className="sm:p-10 card-hover group"
                 >
                   {/* Icon */}
-                  <div style={{
+                  <div className="icon-animate" style={{
                     width: '56px', height: '56px',
                     background: 'linear-gradient(135deg, #0EA5E9, #0369A1)',
                     borderRadius: '16px',
